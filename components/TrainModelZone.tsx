@@ -38,6 +38,7 @@ export default function TrainModelZone() {
     resolver: zodResolver(fileUploadFormSchema),
     defaultValues: {
       name: "",
+      style: "",
       type: "man",
     },
   });
@@ -126,6 +127,7 @@ export default function TrainModelZone() {
     const payload = {
       urls: blobUrls,
       name: form.getValues("name").trim(),
+      style: form.getValues("style").trim(),
       type: form.getValues("type"),
     };
 
@@ -197,6 +199,27 @@ export default function TrainModelZone() {
                 <FormLabel>Name</FormLabel>
                 <FormDescription>
                   Give your model a name so you can easily identify it later.
+                </FormDescription>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. Natalie Headshots"
+                    {...field}
+                    className="max-w-screen-sm"
+                    autoComplete="off"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+              <FormField
+            control={form.control}
+            name="style"
+            render={({ field }) => (
+              <FormItem className="w-full rounded-md">
+                <FormLabel>Style</FormLabel>
+                <FormDescription>
+                The style of image your want to generate -Professional Headshot, Astronaut, Futuristic, etc-
                 </FormDescription>
                 <FormControl>
                   <Input
