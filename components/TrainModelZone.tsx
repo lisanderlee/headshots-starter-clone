@@ -223,7 +223,7 @@ export default function TrainModelZone() {
                 </FormDescription>
                 <FormControl>
                   <Input
-                    placeholder="e.g. Natalie Headshots"
+                    placeholder="e.g. Astronaut"
                     {...field}
                     className="max-w-screen-sm"
                     autoComplete="off"
@@ -300,7 +300,7 @@ export default function TrainModelZone() {
           >
             <FormLabel>Samples</FormLabel>
             <FormDescription>
-              Upload 4-10 images of the person you want to generate headshots
+              Upload 1 images of the person you want to generate headshots
               for.
             </FormDescription>
             <div className="outline-dashed outline-2 outline-gray-100 hover:outline-blue-500 w-full h-full rounded-md p-4 flex justify-center align-middle">
@@ -311,7 +311,7 @@ export default function TrainModelZone() {
                 <div className="flex justify-center flex-col items-center gap-2">
                   <FaImages size={32} className="text-gray-700" />
                   <p className="self-center">
-                    Drag 'n' drop some files here, or click to select files.
+                    Drag 'n' drop a files here, or click to select a file.
                   </p>
                 </div>
               )}

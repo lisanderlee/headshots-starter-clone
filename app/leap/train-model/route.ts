@@ -21,6 +21,7 @@ export async function POST(request: Request) {
   const images = payload.urls;
   const type = payload.type;
   const name = payload.name;
+  const style = payload.style;
 
   const supabase = createRouteHandlerClient<Database>({ cookies });
 
@@ -125,9 +126,9 @@ export async function POST(request: Request) {
       workflow_id: process.env.LEAP_WORKFLOW_ID as string,
       webhook_url: webhookUrlString,
       input: {
-        title: name, // title of the model
-        name: type, // name of the model type
-        image_urls: images,
+        subject_type:type, 
+        image_style:style,
+        sample_image_url:images[0],
       },
     });
 
