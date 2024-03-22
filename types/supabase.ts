@@ -71,6 +71,7 @@ export interface Database {
           id: number
           modelId: string | null
           name: string | null
+          style: string | null
           status: string
           type: string | null
           user_id: string | null
@@ -80,6 +81,7 @@ export interface Database {
           id?: number
           modelId?: string | null
           name?: string | null
+          style?: string | null
           status?: string
           type?: string | null
           user_id?: string | null
@@ -89,6 +91,7 @@ export interface Database {
           id?: number
           modelId?: string | null
           name?: string | null
+          style?: string | null
           status?: string
           type?: string | null
           user_id?: string | null
