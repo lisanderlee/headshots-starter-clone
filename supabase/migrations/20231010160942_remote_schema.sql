@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS "public"."models" (
     "id" bigint NOT NULL,
     "name" "text",
     "type" "text",
+    "style" "text",
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "user_id" "uuid",
     "status" "text" DEFAULT 'processing'::"text" NOT NULL,
