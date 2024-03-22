@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 const leapApiKey = process.env.LEAP_API_KEY;
 // For local development, recommend using an Ngrok tunnel for the domain
-const webhookUrl = `https://${process.env.VERCEL_URL}/leap/train-webhook`;
+const webhookUrl = `${process.env.VERCEL_URL}/leap/train-webhook`;
 const leapWebhookSecret = process.env.LEAP_WEBHOOK_SECRET;
 const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
 
@@ -21,6 +21,7 @@ export async function POST(request: Request) {
   const images = payload.urls;
   const type = payload.type;
   const name = payload.name;
+  const style = payload.style;
 
   const supabase = createRouteHandlerClient<Database>({ cookies });
 
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
   if (images?.length < 4) {
     return NextResponse.json(
       {
-        message: "Upload at least 4 sample images",
+        message: "Upload 1 sample images",
       },
       { status: 500 }
     );
@@ -127,7 +128,8 @@ export async function POST(request: Request) {
       input: {
         title: name, // title of the model
         name: type, // name of the model type
-        image_urls: images,
+        style: style, // name of the model type
+        image_urls: images[0],
       },
     });
 
@@ -160,6 +162,7 @@ export async function POST(request: Request) {
         modelId: workflowResponse.id, // store workflowRunId field to retrieve workflow object if needed later
         user_id: user.id,
         name,
+        style,
         type,
       })
       .select("id")
