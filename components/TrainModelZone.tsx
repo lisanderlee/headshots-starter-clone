@@ -38,6 +38,7 @@ export default function TrainModelZone() {
     resolver: zodResolver(fileUploadFormSchema),
     defaultValues: {
       name: "",
+      style: "",
       type: "man",
     },
   });
@@ -201,6 +202,27 @@ export default function TrainModelZone() {
                 <FormControl>
                   <Input
                     placeholder="e.g. Natalie Headshots"
+                    {...field}
+                    className="max-w-screen-sm"
+                    autoComplete="off"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+                    <FormField
+            control={form.control}
+            name="style"
+            render={({ field }) => (
+              <FormItem className="w-full rounded-md">
+                <FormLabel>Style</FormLabel>
+                <FormDescription>
+                The style of image your want to generate (Professional Headshot, Astronaut, Futuristic, etc)
+                </FormDescription>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. Astronaut"
                     {...field}
                     className="max-w-screen-sm"
                     autoComplete="off"
