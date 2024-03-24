@@ -124,7 +124,7 @@ export async function POST(request: Request) {
 
   try {
     const images = result.images as LeapWebhookImage[];
-
+console.log("LLEFA A IMAGES EN IMAGEWEBHOOK")
     await Promise.all(
       images.map(async (image) => {
         const { error: imageError } = await supabase.from("images").insert({

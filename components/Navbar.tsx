@@ -1,4 +1,5 @@
-import { AvatarIcon } from "@radix-ui/react-icons";
+
+import { User } from "lucide-react";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import {
@@ -14,6 +15,7 @@ import { Button } from "./ui/button";
 import React from "react";
 import { Database } from "@/types/supabase";
 import ClientSideCredits from "./realtime/ClientSideCredits";
+import CartButton from "./shop/cart-button";
 
 export const dynamic = "force-dynamic";
 
@@ -28,9 +30,11 @@ export default async function Navbar() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const {
-    data: credits,
-  } = await supabase.from("credits").select("*").eq("user_id", user?.id ?? '').single()
+  const { data: credits } = await supabase
+    .from("credits")
+    .select("*")
+    .eq("user_id", user?.id ?? "")
+    .single();
 
   return (
     <div className="flex w-full px-4 lg:px-40 py-4 items-center border-b text-center gap-8 justify-between">
@@ -43,6 +47,9 @@ export default async function Navbar() {
         <div className="hidden lg:flex flex-row gap-2">
           <Link href="/overview">
             <Button variant={"ghost"}>Home</Button>
+          </Link>
+          <Link href="/shop">
+            <Button variant={"ghost"}>Shop</Button>
           </Link>
           {stripeIsConfigured && (
             <Link href="/get-credits">
@@ -62,19 +69,25 @@ export default async function Navbar() {
             {stripeIsConfigured && (
               <ClientSideCredits creditsRow={credits ? credits : null} />
             )}
+            
+            <CartButton />
+
+            {/* <ShoppingCart height={24} width={24} className="text-primary" /> */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="cursor-pointer">
-                <AvatarIcon height={24} width={24} className="text-primary" />
+                <User height={24} width={24} className="text-primary" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel className="text-primary text-center overflow-hidden text-ellipsis">{user.email}</DropdownMenuLabel>
+                <DropdownMenuLabel className="text-primary text-center overflow-hidden text-ellipsis">
+                  {user.email}
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <form action="/auth/sign-out" method="post">
                   <Button
                     type="submit"
                     className="w-full text-left"
                     variant={"ghost"}
-                    >
+                  >
                     Log out
                   </Button>
                 </form>

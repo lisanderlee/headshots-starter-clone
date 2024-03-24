@@ -48,3 +48,75 @@
     --ring: 224.3 76.3% 48%;
   }
 }
+
+
+.snipcart {
+  @apply font-sans text-base text-gray-800 font-normal;
+}
+
+.snipcart-modal,
+.snipcart-modal__container,
+.snipcart-cart__content,
+.snipcart-cart-header,
+.snipcart-featured-payment-methods__title {
+  @apply bg-gray-50;
+}
+
+.snipcart__font--regular,
+.snipcart__font--primary,
+.snipcart__font--secondary,
+.snipcart__font--subtitle {
+  @apply font-sans leading-normal;
+}
+
+.snipcart__font--subtitle {
+  @apply font-semibold text-lg md:text-xl;
+}
+
+.snipcart-cart-button--highlight {
+  background-image: none;
+  @apply bg-blue-600 rounded;
+}
+
+.snipcart__box--badge-highlight {
+  background-image: none;
+  @apply bg-blue-600 text-white font-medium;
+}
+
+.snipcart__actions--link {
+  @apply text-blue-600 font-normal text-sm;
+}
+
+.snipcart-cart-summary-fees__notice {
+  @apply text-sm text-gray-500 my-6;
+}
+
+.snipcart-shipping-rates-list-item--highlight {
+  @apply border-blue-600 bg-white;
+}
+
+.snipcart-form-radio {
+  @apply text-blue-600 border-gray-300 shadow-sm focus:ring-0 p-0;
+}
+
+.snipcart-form-radio + label {
+  @apply text-gray-500 text-sm;
+}
+
+.snipcart-form-radio + label:before {
+  background-image: none;
+  @apply rounded-full w-4 h-4 min-w-0 min-h-0 shadow-sm flex items-center border border-gray-300 cursor-pointer;
+}
+
+.snipcart-form-radio:checked + label:before {
+  background-image: none;
+  @apply bg-blue-600;
+}
+
+.snipcart-form-radio:checked + label:after {
+  @apply hidden;
+}
+
+.snipcart-shipping-rates-list-item__price {
+  @apply text-gray-900 text-sm leading-5;
+}
