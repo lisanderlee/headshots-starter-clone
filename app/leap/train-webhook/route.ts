@@ -41,7 +41,7 @@ export async function POST(request: Request) {
   console.log(output, "train model webhook result");
 
   const workflowRunId = incomingData.id;
-  // console.log(workflowRunId, "workflowRunId");
+  console.log(workflowRunId, "workflowRunId");
 
   const urlObj = new URL(request.url);
   const user_id = urlObj.searchParams.get("user_id");
@@ -159,8 +159,10 @@ export async function POST(request: Request) {
 
       // Here we join all of the arrays into one.
       const allHeadshots = [
-        ...output.step2.images
-       
+        ...output.headshots_part_1,
+        ...output.headshots_part_2,
+        ...output.headshots_part_3,
+        ...output.headshots_part_4,
       ];
 
       console.log({ allHeadshots });
