@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Star} from "lucide-react";
+import { Star } from "lucide-react";
 import VariantPicker from "@/components/shop/variant-picker";
 import PictureModal from "@/components/shop/picture-modal";
 export const dynamic = "force-dynamic";
@@ -12,6 +12,8 @@ function classNames(...classes) {
 
 export default function ProductPage({ product }: any) {
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { id, name, variants } = product[0];
   const [firstVariant] = variants;
   const oneStyle = variants.length === 1;
@@ -33,7 +35,28 @@ export default function ProductPage({ product }: any) {
     style: "currency",
     currency: activeVariant.currency,
   }).format(activeVariant.retail_price);
- 
+  /* @ts-ignore */
+
+  const variantsId = variants?.map((obj) => obj.variant_id);
+  /* @ts-ignore */
+
+
+  // const getMockup = async () => {
+  //   console.log()
+  //   const payload = 
+   
+  //   {
+  //     "variant_ids": variantsId,
+      
+  //   }
+
+
+  //   await fetch("/api/postMockups", {
+  //     method: "POST",
+  //     body: JSON.stringify(payload),
+  //   });
+  // };
+console.log(variants)
   return (
     <div className="bg-white">
       <div className="pb-16  sm:pb-24">
@@ -87,11 +110,16 @@ export default function ProductPage({ product }: any) {
                   }}
                 />
               </div>
-
+              {/* <button onClick={() => getMockup(variantsId)}>
+                {" "}
+                Get Mockups
+              </button> */}
               <div className="mt-24">
                 <button
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
-             onClick={()=>{setOpen(true)}}
+                  onClick={() => {
+                    setOpen(true);
+                  }}
                 >
                   Add Your Image
                 </button>
@@ -117,6 +145,3 @@ export default function ProductPage({ product }: any) {
     </div>
   );
 }
-
-
-

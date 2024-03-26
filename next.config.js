@@ -4,7 +4,7 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ["files.cdn.printful.com"],
+    domains: ["files.cdn.printful.com", "https://sdbooth2-production.s3.amazonaws.com"],
   },
 }
 

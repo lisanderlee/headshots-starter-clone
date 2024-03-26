@@ -117,7 +117,9 @@ export async function POST(request: Request) {
 
   try {
     const webhookUrlString = `${webhookUrl}?user_id=${user.id}&webhook_secret=${leapWebhookSecret}&model_type=${type}`;
- 
+
+
+
     const leap = new Leap({
       apiKey: leapApiKey,
     });
