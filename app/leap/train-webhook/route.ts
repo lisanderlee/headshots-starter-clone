@@ -170,7 +170,8 @@ export async function POST(request: Request) {
       const modelId = modelUpdated[0].id;
 
       await Promise.all(
-        allHeadshots.map(async (image) => {
+          /* @ts-ignore */
+        output.face_generations.map(async (image) => {
           const { error: imageError } = await supabase.from("images").insert({
             modelId: Number(modelId),
             uri: image,
