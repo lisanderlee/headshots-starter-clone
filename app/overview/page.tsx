@@ -7,7 +7,8 @@ export const dynamic = "force-dynamic";
 
 export default async function Index() {
   const supabase = createServerComponentClient<Database>({ cookies });
-
+  const webhookUrl = `${process.env.VERCEL_URL}/leap/train-webhook`;
+  const leapWebhookSecret = process.env.LEAP_WEBHOOK_SECRET;
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -24,6 +25,12 @@ export default async function Index() {
     )`
     )
     .eq("user_id", user.id);
+  const webhookUrlString = `${webhookUrl}?user_id=${user.id}&webhook_secret=${leapWebhookSecret}&model_type=man`;
 
-  return <ClientSideModelsList serverModels={models ?? []} />;
+  return (
+    <>
+      {webhookUrlString && <p>{webhookUrlString}</p>}
+      <ClientSideModelsList serverModels={models ?? []} />
+    </>
+  );
 }
