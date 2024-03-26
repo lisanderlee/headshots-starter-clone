@@ -124,15 +124,15 @@ export async function POST(request: Request) {
   try {
     if (incomingData.status === "completed") {
       // Send Email
-      if (resendApiKey) {
-        const resend = new Resend(resendApiKey);
-        await resend.emails.send({
-          from: "noreply@headshots.tryleap.ai",
-          to: user?.email ?? "",
-          subject: "Your model was successfully trained!",
-          html: `<h2>We're writing to notify you that your model training was successful! 1 credit has been used from your account.</h2>`,
-        });
-      }
+      // if (resendApiKey) {
+      //   const resend = new Resend(resendApiKey);
+      //   await resend.emails.send({
+      //     from: "noreply@headshots.tryleap.ai",
+      //     to: user?.email ?? "",
+      //     subject: "Your model was successfully trained!",
+      //     html: `<h2>We're writing to notify you that your model training was successful! 1 credit has been used from your account.</h2>`,
+      //   });
+      // }
 
       const { data: modelUpdated, error: modelUpdatedError } = await supabase
         .from("models")
@@ -158,14 +158,14 @@ export async function POST(request: Request) {
       }
 
       // Here we join all of the arrays into one.
-      const allHeadshots = [
-        ...output.headshots_part_1,
-        ...output.headshots_part_2,
-        ...output.headshots_part_3,
-        ...output.headshots_part_4,
-      ];
+      // const allHeadshots = [
+      //   ...output.headshots_part_1,
+      //   ...output.headshots_part_2,
+      //   ...output.headshots_part_3,
+      //   ...output.headshots_part_4,
+      // ];
 
-      console.log({ allHeadshots });
+      // console.log({ allHeadshots });
 
       const modelId = modelUpdated[0].id;
       console.log("PRE INSERT" , output.face_generations)
