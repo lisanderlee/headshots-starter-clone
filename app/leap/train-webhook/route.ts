@@ -35,10 +35,10 @@ if (!leapWebhookSecret) {
 
 export async function POST(request: Request) {
   const incomingData = await request.json();
-  // console.log(incomingData, "train model webhook incomingData");
+  console.log(incomingData, "train model webhook incomingData");
 
   const { output } = incomingData;
-  // console.log(output, "train model webhook result");
+  console.log(output, "train model webhook result");
 
   const workflowRunId = incomingData.id;
   // console.log(workflowRunId, "workflowRunId");
