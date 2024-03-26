@@ -1,45 +1,37 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
-import ModelPicker from "./model-picker";
+
 export const dynamic = "force-dynamic";
 import { X, Star } from "lucide-react";
 
-const images = [
-  {
-    id: 1,
-    imageSrc:
-      "https://sdbooth2-production.s3.amazonaws.com/m4u3gyqa4tby1jyzjmpitl67n9j8",
-  },
-  {
-    id: 2,
-    imageSrc:
-      "https://sdbooth2-production.s3.amazonaws.com/7pg1g58pcqlko6m4c0onleww9ofc",
-  },
-  {
-    id: 3,
-    imageSrc:
-      "https://sdbooth2-production.s3.amazonaws.com/c6j7e9vhnoh3ghr5qxphxmqmni9k",
-  },
-  {
-    id: 4,
-    imageSrc:
-      "https://sdbooth2-production.s3.amazonaws.com/w4ma7g7usdg73nruderznbfqvm5n",
-  },
-];
-/* @ts-ignore */
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-/* @ts-ignore */
-export default function PictureModal({ open, setOpen }) {
 
-  const [selectedImageId, setSelectedImageId] = useState(null);
-console.log(selectedImageId)
 /* @ts-ignore */
-  const handleImageClick = (id) => {
-      setSelectedImageId(id);
+export default function PictureModal({ open, setOpen, pictures }) {
+  const [selectedImageId, setSelectedImageId] = useState()
+
+  // const handleImageClick = (id) => {
+  //   setSelectedImageId(id);
+  // };
+
+
+  const fetchPictures = async () => {
+    /* @ts-ignore */
+    const response = await fetch(`/api/getPictures/`);
+    const data = await response.json();
+  
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      /* @ts-ignore */
+      const result = await fetchPictures();
+    };
+    fetchData();
+  }, []);
+       /* @ts-ignore */
+  // const modelNames = pictures?.map(item => item.name);
+console.log(pictures)
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -74,7 +66,26 @@ console.log(selectedImageId)
               leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
             >
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
-                <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+              <select
+
+      className="form-select appearance-none w-full relative mb-3 sm:mb-0 flex-grow sm:mr-3 pl-3 py-2 bg-gray-50 border border-gray-300 focus:border-gray-500 shadow-sm text-gray-500 text-sm focus:outline-none focus:text-gray-900 rounded ring-0 focus:ring-0"
+    >
+      {pictures && pictures.map(
+           /* @ts-ignore */
+        (item) => (
+          <option key={item} value={item}>
+          {item}
+          </option>
+        )
+      )}
+    </select>
+
+
+
+
+
+{/* 
+              <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                   <button
                     type="button"
                     className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8"
@@ -119,7 +130,19 @@ console.log(selectedImageId)
                       Select Image
                     </button>
                   </div>
-                </div>
+                </div>  */}
+
+
+
+
+
+
+
+
+
+
+
+
               </Dialog.Panel>
             </Transition.Child>
           </div>

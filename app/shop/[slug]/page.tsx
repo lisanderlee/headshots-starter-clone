@@ -1,10 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-
-
-
 import ProductPage from "@/components/shop/product-page";
-import PictureModal from "@/components/shop/picture-modal";
 export const dynamic = "force-dynamic";
 
 /* @ts-ignore */
@@ -14,7 +10,7 @@ function classNames(...classes) {
 
 export default function Page({ params }: { params: { slug: string } }) {
   const [product, setProduct] = useState();
-
+  const [pictures, setPictures] = useState();
 
   /* @ts-ignore */
   const fetchProducts = async ({ productId }) => {
@@ -37,6 +33,13 @@ export default function Page({ params }: { params: { slug: string } }) {
     }
   };
 
+  const fetchPictures = async () => {
+    /* @ts-ignore */
+    const response = await fetch(`/api/getPictures/`);
+    const data = await response.json();
+    return data;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       /* @ts-ignore */
@@ -47,9 +50,18 @@ export default function Page({ params }: { params: { slug: string } }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      /* @ts-ignore */
+      const result = await fetchPictures();
+      setPictures(result);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="bg-white">
-      {product &&  <ProductPage product={product} />}
+      {product && <ProductPage product={product} pictures={pictures} />}
     </div>
   );
 }

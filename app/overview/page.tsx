@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Index() {
   const supabase = createServerComponentClient<Database>({ cookies });
-  const webhookUrl = `https://${process.env.VERCEL_URL}/leap/train-webhook`;
+  const webhookUrl = `${process.env.VERCEL_URL}/leap/train-webhook`;
   const leapWebhookSecret = process.env.LEAP_WEBHOOK_SECRET;
   const {
     data: { user },

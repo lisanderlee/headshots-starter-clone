@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import VariantPicker from "@/components/shop/variant-picker";
-import PictureModal from "@/components/shop/picture-modal";
+import PictureModal from "@/components/shop/picture-picker-modal";
 export const dynamic = "force-dynamic";
 
 /* @ts-ignore */
@@ -10,7 +10,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductPage({ product }: any) {
+export default function ProductPage({ product, pictures }: any) {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,25 +38,8 @@ export default function ProductPage({ product }: any) {
   /* @ts-ignore */
 
   const variantsId = variants?.map((obj) => obj.variant_id);
-  /* @ts-ignore */
 
 
-  // const getMockup = async () => {
-  //   console.log()
-  //   const payload = 
-   
-  //   {
-  //     "variant_ids": variantsId,
-      
-  //   }
-
-
-  //   await fetch("/api/postMockups", {
-  //     method: "POST",
-  //     body: JSON.stringify(payload),
-  //   });
-  // };
-console.log(variants)
   return (
     <div className="bg-white">
       <div className="pb-16  sm:pb-24">
@@ -138,7 +121,7 @@ console.log(variants)
                 </button>
               </div>
             </div>
-            <PictureModal open={open} setOpen={setOpen} />
+            <PictureModal pictures={pictures} open={open} setOpen={setOpen} />
           </div>
         </div>
       </div>
