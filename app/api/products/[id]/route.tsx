@@ -1,7 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
 import { printful } from "@/components/shop/lib/printful-client";
-
+import { NextResponse } from "next/server";
 type Data = {
   id: string;
   price: number;
@@ -16,21 +14,22 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-
+  console.log("PRODUCTS");
 
   try {
+    console.log("ENTRA ACA PRE");
     const { result } = await printful.get(`store/variants/@${params.id}`);
-
+    console.log("ENTRA ACA");
     result.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
 
-    result.status(200).json({
+    return NextResponse.json({
       id: params.id as string,
       price: result.retail_price,
       url: `/api/products/${params.id}`,
-    });
-         /* @ts-ignore */
-  } catch ({ error }) {
+    }, { status: 200 });
+  } catch (error) {
     console.log(error);
 
+    return new NextResponse("Error fetching product", { status: 500 });
   }
 }

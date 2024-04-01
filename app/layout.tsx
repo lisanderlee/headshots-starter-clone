@@ -43,11 +43,7 @@ export default function RootLayout({ children }: any) {
             data-api-key={process.env.NEXT_PUBLIC_SNIPCART_API_KEY}
             hidden
           >
-    
-              <div className="snipcart-form__field">
-                <snipcart-label for="phone">Phone number</snipcart-label>
-                <snipcart-input name="phone"></snipcart-input>
-              </div>
+ 
          
           </div>
             <Navbar />

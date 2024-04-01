@@ -5,14 +5,15 @@ import type {
   PrintfulShippingItem,
 } from "@/types/printful";
 
-interface SnipcartRequest extends NextApiRequest {
+
+type SnipcartRequest = {
   body: {
     eventName: string;
     mode: string;
     createdOn: string;
     content: { [key: string]: any };
   };
-}
+};
 
 type Data = {
   /** An array of shipping rates. */
@@ -23,14 +24,12 @@ type Error = {
   errors: { key: string; message: string }[];
 };
 
-export default async function handler(
-  req: SnipcartRequest,
-  res: NextApiResponse<Data | Error>
-) {
-  const { eventName, content } = req.body;
+export async function GET(request: Request, context: { params: { id: string } }) {
+    /* @ts-ignore */
+  const { eventName, content } = request.body as SnipcartRequest["body"];
 
-  if (eventName !== "shippingrates.fetch") return res.status(200).end();
-  if (content.items.length === 0) return res.status(200).end();
+  if (eventName !== "shippingrates.fetch") return new Response("", { status: 200 });
+  if (content.items.length === 0) return new Response("", { status: 200 });
 
   const {
     items: cartItems,
@@ -62,30 +61,47 @@ export default async function handler(
   );
 
   try {
-    const { result } = await printful.post("shipping/rates", {
+    const  result = await printful.post("shipping/rates", {
       recipient,
       items,
     });
 
-    res.status(200).json({
+    return new Response(
+      JSON.stringify({
         /* @ts-ignore */
-      rates: result.map((rate) => ({
-        cost: rate.rate,
-        description: rate.name,
-        userDefinedId: rate.id,
-        guaranteedDaysToDelivery: rate.maxDeliveryDays,
-      })),
-    });
-      /* @ts-ignore */
-  } catch ({ error }) {
-    console.log(error);
-    res.status(200).json({
-      errors: [
-        {
-          key: error?.reason,
-          message: error?.message,
+        rates: result.map((rate) => ({
+          cost: rate.rate,
+          description: rate.name,
+          userDefinedId: rate.id,
+          guaranteedDaysToDelivery: rate.maxDeliveryDays,
+        })),
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "s-maxage=3600, stale-while-revalidate",
         },
-      ],
-    });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return new Response(
+      JSON.stringify({
+        errors: [
+          { /* @ts-ignore */
+            key: error?.reason,
+             /* @ts-ignore */
+            message: error?.message,
+          },
+        ],
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 }
