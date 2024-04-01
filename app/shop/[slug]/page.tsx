@@ -18,15 +18,15 @@ export default function Page({ params }: { params: { slug: string } }) {
     const response = await fetch(`/api/getProductById/${params.slug}`);
     const data = await response.json();
     if (
-      data.productDetails.result.sync_product &&
-      data.productDetails.result.sync_variants
+      data.sync_product &&
+      data.sync_variants
     ) {
       const newArray = [
         {
           /* @ts-ignore */
-          ...data.productDetails.result.sync_product,
+          ...data.sync_product,
           /* @ts-ignore */
-          variants: data.productDetails.result.sync_variants,
+          variants: data.sync_variants,
         },
       ];
       return newArray;
@@ -54,14 +54,14 @@ export default function Page({ params }: { params: { slug: string } }) {
     const fetchData = async () => {
       /* @ts-ignore */
       const result = await fetchPictures();
-      setPictures(result);
+      setPictures(result.pictures);
     };
     fetchData();
   }, []);
 
   return (
     <div className="bg-white">
-      {product && <ProductPage product={product} pictures={pictures} />}
+      {product && <ProductPage product={product} setProduct={setProduct} pictures={pictures} />}
     </div>
   );
 }

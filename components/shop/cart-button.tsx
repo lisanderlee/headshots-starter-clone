@@ -6,7 +6,7 @@ import useSnipcartCount from "./hooks/useSnipcartCount";
 export default function CartButton() {
     const { cart } = useSnipcartCount();
     const cartHasItems = cart.items.count !== 0;
-    console.log(cart)
+  
   return (
 
     <button

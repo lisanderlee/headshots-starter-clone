@@ -35,16 +35,16 @@ export default function ClientSideModelsList({
             .from("samples")
             .select("*")
             .eq("modelId", payload.new.id);
-
+     
           const newModel: modelRowWithSamples = {
             ...payload.new,
             samples: samples.data,
           };
-
+   
           const dedupedModels = models.filter(
             (model) => model.id !== payload.old?.id
           );
-
+        
           setModels([...dedupedModels, newModel]);
         }
       )
@@ -62,9 +62,7 @@ export default function ClientSideModelsList({
           <div className="flex flex-row gap-4 w-full justify-between items-center text-center">
             <h1>Your models</h1>
             <Link href="/overview/models/train" className="w-fit">
-              <Button size={"sm"}>
-                Train model
-              </Button>
+              <Button size={"sm"}>Train model</Button>
             </Link>
           </div>
           <ModelsTable models={models} />

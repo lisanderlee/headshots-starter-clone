@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-
+import { useState } from "react";
 import { Database } from "@/types/supabase";
 import { Icons } from "./icons";
 import { useRouter } from "next/navigation";

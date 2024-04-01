@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverActions: false,
+    serverActions: true,
   },
   images: {
-    domains: ["files.cdn.printful.com", "https://sdbooth2-production.s3.amazonaws.com"],
+    domains: ["files.cdn.printful.com", "https://sdbooth2-production.s3.amazonaws.com/"],
   },
 }
 

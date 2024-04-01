@@ -8,13 +8,14 @@ export default function ProductGrid() {
   const fetchProducts = async () => {
     const response = await fetch("/api/getProducts");
     const data = await response.json();
-    setAllProducts(data.products.result);
+    setAllProducts(data);
   };
 
   useEffect(() => {
     fetchProducts();
   }, []);
-console.log(allProducts)
+
+
   return (
     <div className="bg-white">
       <div className="mx-auto px-4 lg:px-32">
@@ -28,6 +29,7 @@ console.log(allProducts)
     </div>
   );
 }
+
 /* @ts-ignore */
 function ProductCard({ product }) {
   return (

@@ -168,7 +168,7 @@ export async function POST(request: Request) {
       // console.log({ allHeadshots });
 
       const modelId = modelUpdated[0].id;
-      console.log("PRE INSERT" , output.face_generations)
+
       await Promise.all(
           /* @ts-ignore */
         output.face_generations.map(async (image) => {
