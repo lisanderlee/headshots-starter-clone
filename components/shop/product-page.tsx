@@ -48,7 +48,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
       </div>
       <div className=" mt-10  lg:w-1/3">
         <div className="flex justify-between w-full">
-          <h1 className="text-3xl font-medium text-terceary">{name}</h1>
+          <h1 className="text-3xl max-w-xs font-medium text-terceary">{name}</h1>
           <p className="text-3xl font-medium text-terceary">{formattedPrice}</p>
         </div>
         <div className="mt-10"></div>

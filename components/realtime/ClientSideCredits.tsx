@@ -45,6 +45,6 @@ export default function ClientSideCredits({
   if (!credits) return null;
 
   return (
-    <p>Credits: {credits.credits}</p>
+    <p className="text-terceary">Credits: {credits.credits}</p>
   );
 }

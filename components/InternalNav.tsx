@@ -60,7 +60,7 @@ export default async function InternalNav() {
           <Link href="/shop">
           <button className=" text-terceary hover:bg-white/20 hover:rounded-full py-1 px-5"  >Shop</button>
           </Link>
-          {stripeIsConfigured && (
+          {!stripeIsConfigured && (
             <Link href="/get-credits">
               <button className=" text-terceary hover:bg-white/20 hover:rounded-full py-1 px-5" >Get Credits</button>
             </Link>
@@ -75,7 +75,7 @@ export default async function InternalNav() {
         )}
         {user && (
           <div className="flex flex-row gap-4 text-center align-middle justify-center">
-            {stripeIsConfigured && (
+            {!stripeIsConfigured && (
               <ClientSideCredits creditsRow={credits ? credits : null} />
             )}
 

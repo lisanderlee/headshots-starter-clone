@@ -1,7 +1,7 @@
 "use client";
 import { ShoppingCart } from "lucide-react";
 import useSnipcartCount from "./hooks/useSnipcartCount";
-
+export const dynamic = "force-dynamic";
 
 export default function CartButton() {
     const { cart } = useSnipcartCount();
