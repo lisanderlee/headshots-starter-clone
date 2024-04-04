@@ -60,7 +60,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   }, []);
 
   return (
-    <div className="bg-white">
+    <div className="  py-10 lg:py-16 ">
       {product && <ProductPage product={product} setProduct={setProduct} pictures={pictures} />}
     </div>
   );

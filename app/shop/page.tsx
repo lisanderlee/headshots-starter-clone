@@ -1,12 +1,19 @@
+"use client";
 import ProductGrid from "@/components/shop/product-grid";
+import { useState, useEffect } from "react";
+export const dynamic = "force-dynamic";
+export default  function Shop() {
+  const [allProducts, setAllProducts] = useState<any[]>([]);
 
-export default async function Shop() {
+  const fetchProducts = async () => {
+    const response = await fetch("/api/getProducts");
+    const data = await response.json();
+    setAllProducts(data);
+  };
 
-  return (
- <ProductGrid /> 
-  );
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  return <ProductGrid allProducts={allProducts} />;
 }
-
-
-
-

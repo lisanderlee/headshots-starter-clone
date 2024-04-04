@@ -28,7 +28,7 @@ export default async function Index() {
 
   return (
     <>
-
+    
       <ClientSideModelsList serverModels={models ?? []} />
     </>
   );

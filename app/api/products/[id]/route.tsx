@@ -5,21 +5,16 @@ type Data = {
   price: number;
   url: string;
 };
-
 type Error = {
   errors: { key: string; message: string }[];
 };
-
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  console.log("PRODUCTS");
-
   try {
-    console.log("ENTRA ACA PRE");
+   
     const { result } = await printful.get(`store/variants/@${params.id}`);
-    console.log("ENTRA ACA");
     result.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
 
     return NextResponse.json({

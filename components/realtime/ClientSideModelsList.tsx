@@ -6,9 +6,10 @@ import { modelRowWithSamples } from "@/types/utils";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaImages } from "react-icons/fa";
-import ModelsTable from "../ModelsTable";
+import FirstTrain from "../first-train";
+import ModelsGrid from "../ModelsGrid";
 
+import Image from "next/image";
 export const revalidate = 0;
 
 type ClientSideModelsListProps = {
@@ -35,16 +36,16 @@ export default function ClientSideModelsList({
             .from("samples")
             .select("*")
             .eq("modelId", payload.new.id);
-     
+
           const newModel: modelRowWithSamples = {
             ...payload.new,
             samples: samples.data,
           };
-   
+
           const dedupedModels = models.filter(
             (model) => model.id !== payload.old?.id
           );
-        
+
           setModels([...dedupedModels, newModel]);
         }
       )
@@ -56,29 +57,22 @@ export default function ClientSideModelsList({
   }, [supabase, models, setModels]);
 
   return (
-    <div id="train-model-container" className="w-full">
+    <div id="train-model-container" className="w-full pb-10 ">
       {models && models.length > 0 && (
         <div className="flex flex-col gap-4">
-          <div className="flex flex-row gap-4 w-full justify-between items-center text-center">
-            <h1>Your models</h1>
-            <Link href="/overview/models/train" className="w-fit">
-              <Button size={"sm"}>Train model</Button>
+          <div className="flex flex-row gap-4 w-full justify-end items-center text-center">
+            <Link href="/overview/models/train">
+              <Button className=" text-xl py-7 px-12 hover:bg-red-500 text-terceary bg-primary mt-10 rounded-full ">
+                New Creation
+              </Button>
             </Link>
           </div>
-          <ModelsTable models={models} />
+          <ModelsGrid models={models} />
         </div>
       )}
       {models && models.length === 0 && (
-        <div className="flex flex-col gap-4 items-center">
-          <FaImages size={64} className="text-gray-500" />
-          <h1 className="text-2xl">
-            Get started by training your first model.
-          </h1>
-          <div>
-            <Link href="/overview/models/train">
-              <Button size={"lg"}>Train model</Button>
-            </Link>
-          </div>
+        <div className="h-screen flex  justify-center items-center ">
+          <FirstTrain />
         </div>
       )}
     </div>

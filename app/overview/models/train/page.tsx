@@ -12,23 +12,20 @@ import { FaArrowLeft } from "react-icons/fa";
 
 export default async function Index() {
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div
-        id="train-model-container"
-        className="flex flex-1 flex-col gap-2 px-2"
-      >
-        <Link href="/overview" className="text-sm w-fit">
-          <Button variant={"outline"}>
+    <div className="w-full py-10">
+      <div id="train-model-container" className="flex   flex-col lg:flex-row  justify-center  gap-5 px-2">
+        <div>
+        <Link href="/overview">
+          <Button className=" text-lg py-5 px-5 hover:bg-red-500 text-terceary bg-primary rounded-full ">
             <FaArrowLeft className="mr-2" />
             Go Back
           </Button>
         </Link>
-        <Card>
+        </div>
+        <Card className="bg-dark text-terceary ">
           <CardHeader>
-            <CardTitle>Train Model</CardTitle>
-            <CardDescription>
-              Choose a name, type, and upload some photos to get started.
-            </CardDescription>
+            <CardTitle className="text-4xl font-medium text-terceary">Create new image</CardTitle>
+       
           </CardHeader>
           <CardContent className="grid gap-6">
             <TrainModelZone />

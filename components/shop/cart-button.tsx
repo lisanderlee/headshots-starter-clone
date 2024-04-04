@@ -10,7 +10,7 @@ export default function CartButton() {
   return (
 
     <button
-    className="snipcart-checkout appearance-none px-2 text-blue-600 hover:text-blue-600 rounded-md cursor-pointer focus:outline-none focus:text-blue-600 transition relative"
+    className="snipcart-checkout appearance-none px-2 text-terceary  rounded-md cursor-pointer focus:outline-none focus:text-blue-600 transition relative"
     aria-label="Cart"
   >
     {cartHasItems && (

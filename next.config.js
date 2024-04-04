@@ -4,7 +4,20 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ["files.cdn.printful.com", "https://sdbooth2-production.s3.amazonaws.com/"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'files.cdn.printful.com',
+  
+      },
+      {
+        protocol: 'https',
+        hostname: 'sdbooth2-production.s3.amazonaws.com',
+       
+       
+      },
+    ],
+ 
   },
 }
 

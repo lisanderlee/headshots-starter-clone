@@ -5,7 +5,7 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   const {result} = await printful.get(`store/products/${params.slug}`);
-  console.log(result)
+
   return new Response(JSON.stringify(result), {
     headers: { "Content-Type": "application/json" },
   });

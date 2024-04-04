@@ -7,7 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Badge } from "../ui/badge";
-
+import { Image } from "lucide-react";
 export const revalidate = 0;
 
 type ClientSideModelProps = {
@@ -45,33 +45,53 @@ export default function ClientSideModel({
   }, [supabase, model, setModel]);
 
   return (
-    <div id="train-model-container" className="w-full h-full">
-      <div className="flex flex-col w-full mt-4 gap-8">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-0">
+    <div id="train-model-container" className="w-full h-full pt-10">
+      <div className="flex flex-row w-full ">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-x-10">
           {samples && (
-            <div className="flex w-full lg:w-1/2 flex-col gap-2">
-              <h2 className="text-xl">Training Data</h2>
-              <div className="flex flex-row gap-4 flex-wrap">
-                {samples.map((sample) => (
+            <div className="flex w-full">
+              <div className="  ">
+                <div className=" relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                  <div className="absolute top-5 left-5">
+                    <Badge
+                      className="flex gap-2 items-center w-min"
+                      variant={
+                        model.status === "finished" ? "default" : "secondary"
+                      }
+                    >
+                      {model.status === "processing"
+                        ? "training"
+                        : model.status}
+                      {model.status === "processing" && (
+                        <Icons.spinner className="h-4 w-4 animate-spin" />
+                      )}
+                    </Badge>
+                  </div>
                   <img
-                    src={sample.uri}
-                    className="rounded-md w-60 h-60 object-cover"
+                    src={serverImages[0].uri}
+                    alt="Model"
+                    className="h-full w-full object-cover object-center group-hover:opacity-75"
                   />
-                ))}
+                </div>
+                <h3 className="mt-2 font-medium text-2xl text-terceary">
+                  {model.name}
+                </h3>
               </div>
             </div>
           )}
-          <div className="flex flex-col w-full lg:w-1/2 rounded-md">
+          <div className=" ">
             {model.status === "finished" && (
-              <div className="flex flex-1 flex-col gap-2">
-                <h1 className="text-xl">Results</h1>
-                <div className="flex flex-row flex-wrap gap-4">
+              <div className="">
+                <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8 ">
                   {serverImages?.map((image) => (
                     <div key={image.id}>
-                      <img
-                        src={image.uri}
-                        className="rounded-md w-60 object-cover"
-                      />
+                      <div className=" relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-2xl xl:aspect-h-8 xl:aspect-w-7">
+                        <img
+                          src={image.uri}
+                          alt="Model"
+                          className="h-full w-full object-cover object-center group-hover:opacity-75"
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>

@@ -189,14 +189,14 @@ export default function TrainModelZone() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="rounded-md flex flex-col gap-8"
+          className="rounded-md flex flex-col gap-7"
         >
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem className="w-full rounded-md">
-                <FormLabel>Name</FormLabel>
+                <FormLabel className="text-xl">Name</FormLabel>
                 <FormDescription>
                   Give your model a name so you can easily identify it later.
                 </FormDescription>
@@ -217,7 +217,7 @@ export default function TrainModelZone() {
             name="style"
             render={({ field }) => (
               <FormItem className="w-full rounded-md">
-                <FormLabel>Style</FormLabel>
+                <FormLabel className="text-xl">Style</FormLabel>
                 <FormDescription>
                 The style of image your want to generate -Professional Headshot, Astronaut, Futuristic, etc-
                 </FormDescription>
@@ -233,8 +233,8 @@ export default function TrainModelZone() {
               </FormItem>
             )}
           />
-          <div className="flex flex-col gap-4">
-            <FormLabel>Type</FormLabel>
+          <div className="flex flex-col gap-2">
+            <FormLabel className="text-xl">Type</FormLabel>
             <FormDescription>
               Select the type of headshots you want to generate.
             </FormDescription>
@@ -296,9 +296,9 @@ export default function TrainModelZone() {
           </div>
           <div
             {...getRootProps()}
-            className=" rounded-md justify-center align-middle cursor-pointer flex flex-col gap-4"
+            className=" rounded-md justify-center align-middle cursor-pointer flex flex-col gap-2"
           >
-            <FormLabel>Samples</FormLabel>
+            <FormLabel className="text-xl">Sample</FormLabel>
             <FormDescription>
               Upload 1 images of the person you want to generate headshots
               for.
@@ -311,7 +311,7 @@ export default function TrainModelZone() {
                 <div className="flex justify-center flex-col items-center gap-2">
                   <FaImages size={32} className="text-gray-700" />
                   <p className="self-center">
-                    Drag 'n' drop a files here, or click to select a file.
+                    Drag 'n' drop a headshot here, or click to select a file.
                   </p>
                 </div>
               )}
