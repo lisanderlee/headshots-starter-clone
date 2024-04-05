@@ -5,9 +5,7 @@ import { Database } from "@/types/supabase";
 import { imageRow, modelRow, sampleRow } from "@/types/utils";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-import { AspectRatio } from "../ui/aspect-ratio";
 import { Badge } from "../ui/badge";
-import { Image } from "lucide-react";
 export const revalidate = 0;
 
 type ClientSideModelProps = {
@@ -67,11 +65,11 @@ export default function ClientSideModel({
                       )}
                     </Badge>
                   </div>
-                  <img
+                  {/* <img
                     src={serverImages[0].uri}
                     alt="Model"
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
-                  />
+                  /> */}
                 </div>
                 <h3 className="mt-2 font-medium text-2xl text-terceary">
                   {model.name}

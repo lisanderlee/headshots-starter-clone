@@ -5,6 +5,7 @@ import { Icons } from "./icons";
 import Foto from "/public/images/result.png";
 import Image from "next/image";
 export default function ModelCard({ model }: any) {
+
   return (
     <>
      <div className=" relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
@@ -24,10 +25,10 @@ export default function ModelCard({ model }: any) {
                 <Image
                   src={Foto}
                   alt="Model"
-                  className="h-full w-full object-cover object-center group-hover:opacity-75"
+                  className="h-full w-full  object-cover object-center group-hover:opacity-75"
                 />
               </div>
-              <h3 className="mt-2 font-medium text-2xl text-terceary">Lisandro</h3>
+              <h3 className="mt-2 font-medium text-2xl text-terceary">{model.name}</h3>
             
     </>
   );

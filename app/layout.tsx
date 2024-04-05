@@ -31,11 +31,11 @@ export default function RootLayout({ children }: any) {
       </head>
       <body className="min-h-screen flex flex-col bg-dark ">
         <section>
-          <Suspense
+          {/* <Suspense
             fallback={
               <Icons.spinner className="h-12 w-12 animate-spin text-white" />
             }
-          >
+          > */}
             <Script
               async
               src="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.js"
@@ -46,10 +46,10 @@ export default function RootLayout({ children }: any) {
               data-api-key={process.env.NEXT_PUBLIC_SNIPCART_API_KEY}
               hidden
             ></div>
-          </Suspense>
+          {/* </Suspense> */}
         </section>
 
-        <main className="w-full">{children}</main>
+        <main className="w-full h-screen">{children}</main>
         <Footer />
         <Toaster />
         {/* <Analytics /> */}

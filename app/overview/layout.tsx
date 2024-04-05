@@ -23,7 +23,7 @@ export default async function RootLayout({
     <>
       {" "}
       <InternalNav />
-      <div className=" w-full h-scren px-4 lg:px-40 bg-dark">
+      <div className=" w-full px-4 lg:px-40 bg-dark">
         {children}
       </div>
     </>

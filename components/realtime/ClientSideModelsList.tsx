@@ -8,8 +8,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import FirstTrain from "../first-train";
 import ModelsGrid from "../ModelsGrid";
-
-import Image from "next/image";
 export const revalidate = 0;
 
 type ClientSideModelsListProps = {
