@@ -57,9 +57,9 @@ console.log(model.status)
                         model.status === "completed" ? "default" : "secondary"
                       }
                     >
-                      {model.status === "processing"
-                        ? "training"
-                        : model.status}
+                      {model.status === "completed"
+                        ? model.status : "training"
+                      }
                       {model.status === "processing" && (
                         <Icons.spinner className="h-4 w-4 animate-spin" />
                       )}
@@ -78,7 +78,7 @@ console.log(model.status)
             </div>
           )}
           <div className=" ">
-            {model.status === "finished" && (
+            {model.status === "completed" && (
               <div className="">
                 <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8 ">
                   {serverImages?.map((image) => (

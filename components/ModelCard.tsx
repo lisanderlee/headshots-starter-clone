@@ -16,7 +16,7 @@ export default function ModelCard({ model }: any) {
                       model.status === "completed" ? "default" : "secondary"
                     }
                   >
-                    {model.status === "processing" ? "training" : model.status }
+                    {model.status === "completed" ?  model.status : "training" }
                     {model.status === "processing" && (
                       <Icons.spinner className="h-4 w-4 animate-spin" />
                     )}
