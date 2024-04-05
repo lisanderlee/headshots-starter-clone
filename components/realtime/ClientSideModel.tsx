@@ -41,7 +41,7 @@ export default function ClientSideModel({
       supabase.removeChannel(channel);
     };
   }, [supabase, model, setModel]);
-
+console.log(model.status)
   return (
     <div id="train-model-container" className="w-full h-full pt-10">
       <div className="flex flex-row w-full ">
@@ -54,7 +54,7 @@ export default function ClientSideModel({
                     <Badge
                       className="flex gap-2 items-center w-min"
                       variant={
-                        model.status === "finished" ? "default" : "secondary"
+                        model.status === "completed" ? "default" : "secondary"
                       }
                     >
                       {model.status === "processing"
@@ -65,11 +65,11 @@ export default function ClientSideModel({
                       )}
                     </Badge>
                   </div>
-                  {/* <img
-                    src={serverImages[0].uri}
+                  <img
+                    src={samples[0].uri}
                     alt="Model"
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
-                  /> */}
+                  />
                 </div>
                 <h3 className="mt-2 font-medium text-2xl text-terceary">
                   {model.name}
