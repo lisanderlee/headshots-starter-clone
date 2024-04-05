@@ -46,7 +46,7 @@ export default async function InternalNav() {
           <div className="flex flex-row ">
             <Image src={Logo} width={30} height={30} alt="Logo Wonder" />
             <h2 className="   text-2xl text-terceary ml-2 ">
-              <span className="font-semibold">Creation</span>
+              <span className="font-semibold">Future</span>
               <span className=" font-normal">Merch</span>
             </h2>
           </div>

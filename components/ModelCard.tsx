@@ -13,7 +13,7 @@ export default function ModelCard({ model }: any) {
                   <Badge
                     className="flex gap-2 items-center w-min"
                     variant={
-                      model.status === "finished" ? "default" : "secondary"
+                      model.status === "completed" ? "default" : "secondary"
                     }
                   >
                     {model.status === "processing" ? "training" : model.status }
