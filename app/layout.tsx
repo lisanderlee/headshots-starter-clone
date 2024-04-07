@@ -49,7 +49,7 @@ export default function RootLayout({ children }: any) {
           {/* </Suspense> */}
         </section>
 
-        <main className="w-full h-screen">{children}</main>
+        <main className="w-full ">{children}</main>
         <Footer />
         <Toaster />
         {/* <Analytics /> */}

@@ -11,11 +11,11 @@ export async function GET(
     "Accept":"*/*"
 
   };
-  console.log(params.slug)
-  const res = await fetch(`  https://api.printful.com/mockup-generator/task?task_key=${params.slug}`, {
+
+  const res = await fetch(`https://api.printful.com/v2/mockup-tasks?id=${params.slug}`, {
     headers: headers,
   });
-  console.log(res)
+
   const newMockups = await res.json();
 
   /* @ts-ignore */

@@ -41,7 +41,7 @@ export default function ClientSideModel({
       supabase.removeChannel(channel);
     };
   }, [supabase, model, setModel]);
-console.log(model.status)
+
   return (
     <div id="train-model-container" className="w-full h-full pt-10">
       <div className="flex flex-row w-full ">
@@ -54,12 +54,12 @@ console.log(model.status)
                     <Badge
                       className="flex gap-2 items-center w-min"
                       variant={
-                        model.status === "completed" ? "default" : "secondary"
+                        model.status === "finished" ? "default" : "secondary"
                       }
                     >
-                      {model.status === "completed"
-                        ? model.status : "training"
-                      }
+                      {model.status === "processing"
+                        ? "training"
+                        : model.status}
                       {model.status === "processing" && (
                         <Icons.spinner className="h-4 w-4 animate-spin" />
                       )}
@@ -78,7 +78,7 @@ console.log(model.status)
             </div>
           )}
           <div className=" ">
-            {model.status === "completed" && (
+            {model.status === "finished" && (
               <div className="">
                 <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-2 xl:gap-x-8 ">
                   {serverImages?.map((image) => (

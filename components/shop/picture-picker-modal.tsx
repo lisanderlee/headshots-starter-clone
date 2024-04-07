@@ -3,6 +3,9 @@ import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { X } from "lucide-react";
 import Image from "next/image";
+import ExtractUniqueCombinations from "./utils/extract-placement";
+import UpdateBody from "./utils/update-body";
+import useStore from "@/lib/store";
 export const dynamic = "force-dynamic";
 
 /* @ts-ignore */
@@ -10,16 +13,16 @@ export default function PictureModal({
   open,
   setOpen,
   createdImages,
-  variantsId,
+  id,
   productId,
-  setProduct,
-  product,
+  setNewMockups,
 }: any) {
   const [selectedName, setSelectedName] = useState(0);
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedUri, setSelectedUri] = useState(null);
-
-
+  const [loading, setLoading] = useState(true);
+  /* @ts-ignore */
+  const { setBodyContent } = useStore();
   useEffect(() => {
     if (!createdImages) return;
 
@@ -36,13 +39,92 @@ export default function PictureModal({
   const handleImageClick = (uri) => {
     setSelectedUri(uri);
   };
-   /* @ts-ignore */
-  // const handleClick = (productId) => {
-  
-  //   MockProcess({productId});
-  // };
 
+  /* @ts-ignore */
+  const fetchProductVariants = async (id, styleId) => {
+    const response = await fetch(`/api/getProductVariants/${id}`);
+    const data = await response.json();
+    const result = ExtractUniqueCombinations(data.data);
+    if (result && selectedUri) {
+      const newBody = UpdateBody(
+        result.placements[0],
+        result.product_variants,
+        selectedUri,
+        result.product_options,
+        productId,
+        styleId
+      );
+      setBodyContent(newBody);
+      return newBody;
+    }
+  };
 
+  /* @ts-ignore */
+  const fetchMockUpStyle = async (productId) => {
+    const response = await fetch(`/api/getMockupStyle/${productId}`);
+    const data = await response.json();
+    return data.data[0].mockup_styles[0].id;
+  };
+
+  /* @ts-ignore */
+  const generateMockup = async (body) => {
+    try {
+      // Make the API call to your Next.js API route
+      const response = await fetch(`/api/generateMockup/`, {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+
+      const result = await response.json();
+
+      return result;
+    } catch (error) {
+      // Handle any errors that occur during the API call
+      console.error("Error:", error);
+    }
+  };
+
+  /* @ts-ignore */
+  const fetchGeneratedMockups = async (id) => {
+    const response = await fetch(`/api/getGeneratedMockup/${id}`);
+    const data = await response.json();
+    return data;
+  };
+
+  /* @ts-ignore */
+  const handleClick = () => {
+    if (selectedUri) {
+      fetchMockUpStyle(productId).then((styleId) => {
+        fetchProductVariants(id, styleId).then((newBody) => {
+          generateMockup(newBody).then((result) => {
+        
+            // Add a 1-second delay before executing fetchGeneratedMockups
+              setTimeout(() => {
+                fetchGeneratedMockups(result.data[0].id).then((data) => {
+                 setNewMockups(data);
+                 setOpen(false)
+
+                });
+              }, 3000);
+          });
+        });
+      });
+    } else {
+      alert("Pick a picture");
+    }
+  };
+
+  //   /* @ts-ignore */
+  //   const fetchShipping = async () => {
+
+  //     const response = await fetch(`/api/snipcart/shipping/`);
+  //     console.log(response)
+  //   };
+
+  //  const handleClick = () => {
+  //  const response = fetchShipping()
+
+  //   }
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -112,7 +194,7 @@ export default function PictureModal({
                               className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100  col-span-1"
                             >
                               <Image
-                                 priority={true}
+                                priority={true}
                                 key={index}
                                 src={images}
                                 width={300}
@@ -133,7 +215,7 @@ export default function PictureModal({
                       <button
                         type="submit"
                         className="mt-8 flex w-full items-center justify-center rounded-full border border-transparent bg-primary px-8 py-3 text-base font-medium text-terceary hover:bg-red-500 "
-                        // onClick={() => handleClick(productId)}
+                        onClick={() => handleClick()}
                       >
                         Submit Image
                       </button>

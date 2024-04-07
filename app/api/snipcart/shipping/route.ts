@@ -24,7 +24,8 @@ type Error = {
   errors: { key: string; message: string }[];
 };
 
-export async function GET(request: Request, context: { params: { id: string } }) {
+export async function GET(request: Request) {
+
     /* @ts-ignore */
   const { eventName, content } = request.body as SnipcartRequest["body"];
 

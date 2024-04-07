@@ -1,5 +1,5 @@
 import { printful } from "./printful-client";
-
+import useStore from "@/lib/store";
 import type { SnipcartWebhookContent, PrintfulShippingItem } from "@/types/printful";
 
 const createOrder = async ({
@@ -22,12 +22,15 @@ const createOrder = async ({
     ...(shippingAddress.phone && { phone: shippingAddress.phone }),
     email,
   };
-
+   /* @ts-ignore */
+  const { bodyContent} = useStore();
+console.log(bodyContent )
   const printfulItems: PrintfulShippingItem[] = items.map(
            /* @ts-ignore */
     (item): PrintfulShippingItem => ({
       external_variant_id: item.id,
       quantity: item.quantity,
+      //Agregar aca los datos de la impresion 
     })
   );
 

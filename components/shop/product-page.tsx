@@ -1,8 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import VariantPicker from "@/components/shop/variant-picker";
 import PictureModal from "@/components/shop/picture-picker-modal";
 import Link from "next/link";
+import ExtractProductId from "./utils/extract-product-id";
+
 const dynamic = "force-dynamic";
 
 /* @ts-ignore */
@@ -11,10 +13,12 @@ function classNames(...classes) {
 }
 
 export default function ProductPage({ product, setProduct, pictures }: any) {
+  
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState(null);
+  const [productId, setProductId] = useState("");
+  const [newMockups, setNewMockups] = useState("");
+  const [productImage, setProductImage] = useState();
   const { id, name, variants } = product[0];
-  const productId = product[0].id;
   const [firstVariant] = variants;
   const oneStyle = variants.length === 1;
   const [activeVariantExternalId, setActiveVariantExternalId] = useState(
@@ -36,19 +40,48 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
   /* @ts-ignore */
   const variantsId = variants?.map((obj) => obj.variant_id);
 
+  useEffect(() => {
+    if (product) {
+      const result = ExtractProductId(product);
+      setProductId(result);
+    }
+  }, []);
+  /* @ts-ignore */
+  function getMockupUrl(data, variantId) {
+    // Extract the mockup URLs based on the provided variant_id
+    for (const item of data.data) {
+      for (const mockup of item.catalog_variant_mockups) {
+        if (mockup.catalog_variant_id === variantId) {
+          return mockup.mockups[0].mockup_url; // Assuming there's only one mockup per variant
+        }
+      }
+    }
+    return null; // Return null if variant_id is not found
+  }
+  useEffect(() => {
+    if (newMockups) {
+      const mockupUrl = getMockupUrl(newMockups, activeVariant.variant_id);
+      setProductImage(mockupUrl);
+    } else {
+      setProductImage(activeVariantFile.preview_url);
+    }
+  }, [newMockups, activeVariantFile]);
+console.log(activeVariantExternalId)
   return (
     <div className=" lg:gap-x-10 flex  flex-col lg:flex-row pb-16">
       <div className="flex  w-full lg:w-2/3">
         <img
           alt={`${activeVariant.name} ${name}`}
           title={`${activeVariant.name} ${name}`}
-          src={activeVariantFile.preview_url}
+          src={productImage}
           className="rounded-2xl "
         />
       </div>
       <div className=" mt-10  lg:w-1/3">
         <div className="flex justify-between w-full">
-          <h1 className="text-3xl max-w-xs font-medium text-terceary">{name}</h1>
+          <h1 className="text-3xl max-w-xs font-medium text-terceary">
+            {name}
+          </h1>
           <p className="text-3xl font-medium text-terceary">{formattedPrice}</p>
         </div>
         <div className="mt-10"></div>
@@ -73,7 +106,13 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
           disabled={oneStyle}
         />
         <div className="mt-10 lg:mt-24">
-          {pictures ? (
+          {pictures && pictures?.length == 0 ? (
+            <Link href="/overview/models/train">
+              <div className="flex max-w-xs flex-1 items-center justify-center rounded-full border border-transparent bg-secondary px-8 py-3 text-base font-medium text-dark hover:bg-[#66B8EE]  sm:w-full">
+                Create Images
+              </div>
+            </Link>
+          ) : (
             <button
               className="flex max-w-xs flex-1 items-center justify-center rounded-full border border-transparent bg-secondary px-8 py-3 text-base font-medium text-dark hover:bg-[#66B8EE]  sm:w-full"
               onClick={() => {
@@ -82,17 +121,6 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
             >
               Add Your Image
             </button>
-          ) : (
-            <Link href="/overview/models/train">
-              <div
-                className="flex max-w-xs flex-1 items-center justify-center rounded-full border border-transparent bg-secondary px-8 py-3 text-base font-medium text-dark hover:bg-[#66B8EE]  sm:w-full"
-                onClick={() => {
-                  setOpen(true);
-                }}
-              >
-                Create Images
-              </div>
-            </Link>
           )}
         </div>
         <div className="mt-5">
@@ -102,7 +130,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
             data-item-price={activeVariant.retail_price}
             data-item-url={`/api/products/${activeVariantExternalId}`}
             data-item-description={activeVariant.name}
-            data-item-image={activeVariantFile.preview_url}
+            data-item-image={productImage}
             data-item-name={name}
           >
             Add to Cart
@@ -116,7 +144,8 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
           createdImages={pictures}
           open={open}
           setOpen={setOpen}
-          variantsId={variantsId}
+          setNewMockups={setNewMockups}
+          id={id}
           productId={productId}
         />
       )}

@@ -8,6 +8,7 @@ export default  function Shop() {
   const fetchProducts = async () => {
     const response = await fetch("/api/getProducts");
     const data = await response.json();
+    console.log(data)
     setAllProducts(data);
   };
 

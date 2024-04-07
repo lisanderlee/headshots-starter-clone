@@ -13,7 +13,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [pictures, setPictures] = useState();
 
   /* @ts-ignore */
-  const fetchProducts = async ({ productId }) => {
+  const fetchProducts = async () => {
     /* @ts-ignore */
     const response = await fetch(`/api/getProductById/${params.slug}`);
     const data = await response.json();

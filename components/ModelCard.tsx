@@ -5,7 +5,7 @@ import { Icons } from "./icons";
 import Foto from "/public/images/result.png";
 import Image from "next/image";
 export default function ModelCard({ model }: any) {
-
+  console.log(model)
   return (
     <>
      <div className=" relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
@@ -13,10 +13,10 @@ export default function ModelCard({ model }: any) {
                   <Badge
                     className="flex gap-2 items-center w-min"
                     variant={
-                      model.status === "completed" ? "default" : "secondary"
+                      model.status === "finished" ? "default" : "secondary"
                     }
                   >
-                    {model.status === "completed" ?  model.status : "training" }
+                    {model.status === "processing" ? "training" : model.status }
                     {model.status === "processing" && (
                       <Icons.spinner className="h-4 w-4 animate-spin" />
                     )}

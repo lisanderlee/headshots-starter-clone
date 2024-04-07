@@ -9,7 +9,7 @@ export async function GET(
   };
 
   const res = await fetch(
-    `https://api.printful.com/v2/sync-products/${params.slug}/sync-variants`,
+    `https://api.printful.com/v2/catalog-products/${params.slug}/mockup-styles`,
     {
       headers: headers,
     }
