@@ -24,13 +24,14 @@ type Error = {
   errors: { key: string; message: string }[];
 };
 
-export async function GET(request: Request) {
+export default async function handler(
+  req: SnipcartRequest,
+  res: NextApiResponse<Data | Error>
+) {
+  const { eventName, content } = req.body;
 
-    /* @ts-ignore */
-  const { eventName, content } = request.body as SnipcartRequest["body"];
-
-  if (eventName !== "shippingrates.fetch") return new Response("", { status: 200 });
-  if (content.items.length === 0) return new Response("", { status: 200 });
+  if (eventName !== "shippingrates.fetch") return res.status(200).end();
+  if (content.items.length === 0) return res.status(200).end();
 
   const {
     items: cartItems,
@@ -62,47 +63,31 @@ export async function GET(request: Request) {
   );
 
   try {
-    const  result = await printful.post("shipping/rates", {
+    const { result } = await printful.post("shipping/rates", {
       recipient,
       items,
     });
 
-    return new Response(
-      JSON.stringify({
+    res.status(200).json({
         /* @ts-ignore */
-        rates: result.map((rate) => ({
-          cost: rate.rate,
-          description: rate.name,
-          userDefinedId: rate.id,
-          guaranteedDaysToDelivery: rate.maxDeliveryDays,
-        })),
-      }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "s-maxage=3600, stale-while-revalidate",
-        },
-      }
-    );
-  } catch (error) {
+      rates: result.map((rate) => ({
+        cost: rate.rate,
+        description: rate.name,
+        userDefinedId: rate.id,
+        guaranteedDaysToDelivery: rate.maxDeliveryDays,
+      })),
+    });
+      /* @ts-ignore */
+  } catch ({ error }) {
+    
     console.log(error);
-    return new Response(
-      JSON.stringify({
-        errors: [
-          { /* @ts-ignore */
-            key: error?.reason,
-             /* @ts-ignore */
-            message: error?.message,
-          },
-        ],
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
+    res.status(200).json({
+      errors: [
+        {
+          key: error?.reason,
+          message: error?.message,
         },
-      }
-    );
+      ],
+    });
   }
 }
