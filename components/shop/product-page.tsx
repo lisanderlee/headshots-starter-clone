@@ -66,6 +66,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
       setProductImage(activeVariantFile.preview_url);
     }
   }, [newMockups, activeVariantFile]);
+  console.log(product)
 console.log(activeVariantExternalId)
   return (
     <div className=" lg:gap-x-10 flex  flex-col lg:flex-row pb-16">
