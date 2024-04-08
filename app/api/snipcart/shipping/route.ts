@@ -25,11 +25,11 @@ type Error = {
   errors: { key: string; message: string }[];
 };
 
-export async function POST(  req: SnipcartRequest, res:NextResponse) {
+export async function POST(   request: Request,) {
     /* @ts-ignore */
-  const { eventName, content } = req.body;
+  const { eventName, content } = request.body;
 
-  console.log("ENTRAA", eventName, content)
+  console.log("ENTRAA", eventName, content, request.body)
 
   // if (eventName !== "shippingrates.fetch") return res.status(200).end();
   // if (content.items.length === 0) return res.status(200).end();
