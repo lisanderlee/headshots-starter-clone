@@ -25,7 +25,7 @@ import type {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const body = req.body;
-  console.log(body);
+  console.log("ENTRA A SHIPPING", body);
   // if (eventName !== "shippingrates.fetch") return res.status(200).end();
   // if (content.items.length === 0) return res.status(200).end();
 
