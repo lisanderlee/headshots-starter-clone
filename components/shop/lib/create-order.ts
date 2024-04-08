@@ -22,14 +22,12 @@ const createOrder = async ({
     ...(shippingAddress.phone && { phone: shippingAddress.phone }),
     email,
   };
-   /* @ts-ignore */
 
   const printfulItems: PrintfulShippingItem[] = items.map(
-           /* @ts-ignore */
+     /* @ts-ignore */
     (item): PrintfulShippingItem => ({
       external_variant_id: item.id,
       quantity: item.quantity,
-      //Agregar aca los datos de la impresion 
     })
   );
 
