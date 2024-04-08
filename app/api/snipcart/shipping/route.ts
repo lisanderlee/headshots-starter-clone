@@ -5,6 +5,8 @@ import type {
   PrintfulShippingItem,
 } from "@/types/printful";
 
+
+
 // interface SnipcartRequest extends NextRequest {
 //   body: {
 //     eventName: string;
@@ -23,9 +25,12 @@ import type {
 //   errors: { key: string; message: string }[];
 // };
 
-export async function POST(req: NextRequest, res: NextResponse) {
-  const body = req.body;
-  console.log("ENTRA A SHIPPING", body);
+export async function POST(  req: NextRequest, res:NextResponse) {
+    /* @ts-ignore */
+  const { eventName, content } = req.body;
+
+  console.log("ENTRAA", eventName, content)
+
   // if (eventName !== "shippingrates.fetch") return res.status(200).end();
   // if (content.items.length === 0) return res.status(200).end();
 
