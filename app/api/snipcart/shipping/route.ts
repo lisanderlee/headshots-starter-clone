@@ -6,26 +6,26 @@ import type {
 } from "@/types/printful";
 
 
+   /* @ts-ignore */
+interface SnipcartRequest extends NextRequest {
+  body: {
+    eventName: string;
+    mode: string;
+    createdOn: string;
+    content: { [key: string]: any };
+  };
+}
 
-// interface SnipcartRequest extends NextRequest {
-//   body: {
-//     eventName: string;
-//     mode: string;
-//     createdOn: string;
-//     content: { [key: string]: any };
-//   };
-// }
+type Data = {
+  /** An array of shipping rates. */
+  rates: SnipcartShippingRate[];
+};
 
-// type Data = {
-//   /** An array of shipping rates. */
-//   rates: SnipcartShippingRate[];
-// };
+type Error = {
+  errors: { key: string; message: string }[];
+};
 
-// type Error = {
-//   errors: { key: string; message: string }[];
-// };
-
-export async function POST(  req: NextRequest, res:NextResponse) {
+export async function POST(  req: SnipcartRequest, res:NextResponse) {
     /* @ts-ignore */
   const { eventName, content } = req.body;
 
