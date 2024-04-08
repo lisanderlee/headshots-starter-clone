@@ -1,133 +1,85 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { NextRequest, NextResponse } from "next/server";
 import { printful } from "@/components/shop/lib/printful-client";
 import type {
   SnipcartShippingRate,
   PrintfulShippingItem,
 } from "@/types/printful";
 
-type SnipcartRequest = {
-  eventName: string;
-  content: {
-    items: {
-      id: string;
-      quantity: number;
-    }[];
-    shippingAddress1?: string;
-    shippingAddress2?: string;
-    shippingAddressCity?: string;
-    shippingAddressCountry?: string;
-    shippingAddressProvince?: string;
-    shippingAddressPostalCode?: string;
-    shippingAddressPhone?: string;
-  };
-};
+// interface SnipcartRequest extends NextRequest {
+//   body: {
+//     eventName: string;
+//     mode: string;
+//     createdOn: string;
+//     content: { [key: string]: any };
+//   };
+// }
 
-type Data = {
-  /** An array of shipping rates. */
-  rates: SnipcartShippingRate[];
-};
+// type Data = {
+//   /** An array of shipping rates. */
+//   rates: SnipcartShippingRate[];
+// };
 
-type Error = {
-  errors: { key: string; message: string }[];
-};
-  /* @ts-ignore */
-export async function POST(  request: Request) {
+// type Error = {
+//   errors: { key: string; message: string }[];
+// };
 
-  const headers = {
-    Authorization: `Bearer ${process.env.PRINTIFUL_KEY}`,
-    "X-PF-Store-Id": "13335936",
-    "Content-Type": "application/json",
-    "Connection":"keep-alive",
-    "Accept-Encoding":"gzip, deflate, br",
-    "Accept":"*/*"
-  };
+export async function POST(req: NextRequest, res: NextResponse) {
+  const body = req.body;
+  console.log(body);
+  // if (eventName !== "shippingrates.fetch") return res.status(200).end();
+  // if (content.items.length === 0) return res.status(200).end();
 
+  // const {
+  //   items: cartItems,
+  //   shippingAddress1,
+  //   shippingAddress2,
+  //   shippingAddressCity,
+  //   shippingAddressCountry,
+  //   shippingAddressProvince,
+  //   shippingAddressPostalCode,
+  //   shippingAddressPhone,
+  // } = content;
 
+  // const recipient = {
+  //   ...(shippingAddress1 && { address1: shippingAddress1 }),
+  //   ...(shippingAddress2 && { address2: shippingAddress2 }),
+  //   ...(shippingAddressCity && { city: shippingAddressCity }),
+  //   ...(shippingAddressCountry && { country_code: shippingAddressCountry }),
+  //   ...(shippingAddressProvince && { state_code: shippingAddressProvince }),
+  //   ...(shippingAddressPostalCode && { zip: shippingAddressPostalCode }),
+  //   ...(shippingAddressPhone && { phone: shippingAddressPhone }),
+  // };
 
+  // const items: PrintfulShippingItem[] = cartItems.map(
+  //   (item): PrintfulShippingItem => ({
+  //     external_variant_id: item.id,
+  //     quantity: item.quantity,
+  //   })
+  // );
 
-  const { eventName, content } = await request.json();
+  // try {
+  //   const { result } = await printful.post("shipping/rates", {
+  //     recipient,
+  //     items,
+  //   });
 
-  if (eventName !== 'shippingrates.fetch') {
-    return new Response(null, { status: 200 });
-  }
-
-  if (content.items.length === 0) {
-    return new Response(null, { status: 200 });
-  }
-
-  const {
-    items: cartItems,
-    shippingAddress1,
-    shippingAddress2,
-    shippingAddressCity,
-    shippingAddressCountry,
-    shippingAddressProvince,
-    shippingAddressPostalCode,
-    shippingAddressPhone,
-  } = content;
-
-  const recipient = {
-    ...(shippingAddress1 && { address1: shippingAddress1 }),
-    ...(shippingAddress2 && { address2: shippingAddress2 }),
-    ...(shippingAddressCity && { city: shippingAddressCity }),
-    ...(shippingAddressCountry && { country_code: shippingAddressCountry }),
-    ...(shippingAddressProvince && { state_code: shippingAddressProvince }),
-    ...(shippingAddressPostalCode && { zip: shippingAddressPostalCode }),
-    ...(shippingAddressPhone && { phone: shippingAddressPhone }),
-  };
-
-  const items: PrintfulShippingItem[] = cartItems.map(
-    (item: any): PrintfulShippingItem => ({
-      external_variant_id: item.id,
-      quantity: item.quantity,
-    })
-  );
-
-  try {
-    const body = {
-      recipient,
-      items,
-    };
-    /* @ts-ignore */
-    const {result} = await fetch(
-      `https://api.printful.com/shipping/rates`,
-      {
-        method: "POST",
-        headers: headers,
-        // body: body
-        body: JSON.stringify(body),
-      }
-    );
-  
-
-
-
-    return new Response(JSON.stringify({
-      rates: result.map((rate: any) => ({
-        cost: rate.rate,
-        description: rate.name,
-        userDefinedId: rate.id,
-        guaranteedDaysToDelivery: rate.maxDeliveryDays,
-      }))
-    }), { status: 200 });
-      /* @ts-ignore */
-  } catch ({ error }) {
-    console.log(error);
-    return new Response(JSON.stringify({
-      errors: [
-        {
-          key: error?.reason,
-          message: error?.message,
-        },
-      ],
-    }), { status: 200 });
-  }
+  //   res.status(200).json({
+  //     rates: result.map((rate) => ({
+  //       cost: rate.rate,
+  //       description: rate.name,
+  //       userDefinedId: rate.id,
+  //       guaranteedDaysToDelivery: rate.maxDeliveryDays,
+  //     })),
+  //   });
+  // } catch ({ error }) {
+  //   console.log(error);
+  //   res.status(200).json({
+  //     errors: [
+  //       {
+  //         key: error?.reason,
+  //         message: error?.message,
+  //       },
+  //     ],
+  //   });
+  // }
 }
-
-
-
-
-
-
-
-
