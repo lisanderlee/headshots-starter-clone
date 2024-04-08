@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { printful } from "@/components/shop/lib/printful-client";
 import type {
   SnipcartShippingRate,
@@ -31,15 +31,28 @@ type Error = {
   errors: { key: string; message: string }[];
 };
   /* @ts-ignore */
-export async function POST(request) {
+export async function POST(  request: Request) {
+
+  const headers = {
+    Authorization: `Bearer ${process.env.PRINTIFUL_KEY}`,
+    "X-PF-Store-Id": "13335936",
+    "Content-Type": "application/json",
+    "Connection":"keep-alive",
+    "Accept-Encoding":"gzip, deflate, br",
+    "Accept":"*/*"
+  };
+
+
+
+
   const { eventName, content } = await request.json();
 
   if (eventName !== 'shippingrates.fetch') {
-    return new NextResponse(null, { status: 200 });
+    return new Response(null, { status: 200 });
   }
 
   if (content.items.length === 0) {
-    return new NextResponse(null, { status: 200 });
+    return new Response(null, { status: 200 });
   }
 
   const {
@@ -71,12 +84,25 @@ export async function POST(request) {
   );
 
   try {
-    const { result } = await printful.post('shipping/rates', {
+    const body = {
       recipient,
       items,
-    });
+    };
+    /* @ts-ignore */
+    const {result} = await fetch(
+      `https://api.printful.com/shipping/rates`,
+      {
+        method: "POST",
+        headers: headers,
+        // body: body
+        body: JSON.stringify(body),
+      }
+    );
+  
 
-    return new NextResponse(JSON.stringify({
+
+
+    return new Response(JSON.stringify({
       rates: result.map((rate: any) => ({
         cost: rate.rate,
         description: rate.name,
@@ -87,7 +113,7 @@ export async function POST(request) {
       /* @ts-ignore */
   } catch ({ error }) {
     console.log(error);
-    return new NextResponse(JSON.stringify({
+    return new Response(JSON.stringify({
       errors: [
         {
           key: error?.reason,
@@ -97,3 +123,11 @@ export async function POST(request) {
     }), { status: 200 });
   }
 }
+
+
+
+
+
+
+
+
