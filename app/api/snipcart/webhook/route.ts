@@ -26,8 +26,7 @@ export async function POST(req: NextRequest) {
     });
 
   if (!token)
-    console.log(token);
-    return new Response("Not Authorized", {
+    return new Response("TOKEN Not Authorized", {
       status: 401,
     });
 
@@ -37,7 +36,7 @@ export async function POST(req: NextRequest) {
     );
 
     if (!verifyToken.ok)
-      return new Response("Not Authorized", {
+      return new Response("VERIFY Not Authorized", {
         status: 401,
       });
   } catch (err) {
