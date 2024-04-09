@@ -13,33 +13,35 @@ export async function POST(req: NextRequest) {
   const content = result.content;
   /* @ts-ignore */
   const token = req.headers["x-snipcart-requesttoken"];
+  const method = req.method
+  console.log("METHOD", method)
 
-  if (req.method !== "POST")
-    /* @ts-ignore */
-    return res.status(405).json({ message: "Method not allowed" });
+  // if (req.method !== "POST")
+  //   /* @ts-ignore */
+  //   return res.status(405).json({ message: "Method not allowed" });
 
-  if (!allowedEvents.includes(eventName))
-    /* @ts-ignore */
-    return res.status(400).json({ message: "This event is not permitted" });
+  // if (!allowedEvents.includes(eventName))
+  //   /* @ts-ignore */
+  //   return res.status(400).json({ message: "This event is not permitted" });
 
-  try {
-    switch (eventName) {
-      case "order.completed":
-        await createOrder(content);
-        break;
-      case "customauth:customer_updated":
-        /* @ts-ignore */
-        return res
-          .status(200)
-          .json({ message: "Customer updated - no action taken" });
-      default:
-        throw new Error("No such event handler exists");
-    }
-    /* @ts-ignore */
-    res.status(200).json({ message: "Done" });
-  } catch (err) {
-    console.log(err);
-    /* @ts-ignore */
-    res.status(500).json({ message: "Something went wrong" });
-  }
+  // try {
+  //   switch (eventName) {
+  //     case "order.completed":
+  //       await createOrder(content);
+  //       break;
+  //     case "customauth:customer_updated":
+  //       /* @ts-ignore */
+  //       return res
+  //         .status(200)
+  //         .json({ message: "Customer updated - no action taken" });
+  //     default:
+  //       throw new Error("No such event handler exists");
+  //   }
+  //   /* @ts-ignore */
+  //   res.status(200).json({ message: "Done" });
+  // } catch (err) {
+  //   console.log(err);
+  //   /* @ts-ignore */
+  //   res.status(500).json({ message: "Something went wrong" });
+  // }
 }
