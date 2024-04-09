@@ -10,7 +10,8 @@ export async function POST(req: NextRequest) {
     "customauth:customer_updated",
   ];
 
-  const { headers, body } = req;
+  /* @ts-ignore */
+  const { headers, body } = req.body;
   /* @ts-ignore */
   if (headers.get("content-type") !== "application/json") {
     return new NextResponse("Content-Type must be application/json LISO", {
