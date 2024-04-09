@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   // ];
   const result = await req.json()
 
-  console.log("TEST SIMPLE", req.headers, req.body, result);
+  console.log("TEST SIMPLE", result.body );
   // const token = req.headers["x-snipcart-requesttoken"];
   // console.log(token);
 
