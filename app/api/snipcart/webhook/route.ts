@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 import { headers } from "next/headers";
 import createOrder from "@/components/shop/lib/create-order";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const allowedEvents: SnipcartWebhookEvent[] = [
     "order.completed",
     "customauth:customer_updated",
@@ -18,14 +18,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   if (method !== "POST")
     /* @ts-ignore */
-    return res.status(405).json({ message: "Method not allowed" });
+    return NextResponse.status(405).json({ message: "Method not allowed" });
 
   if (!allowedEvents.includes(eventName))
-    /* @ts-ignore */
-    return res.status(400).json({ message: "This event is not permitted" });
-  /* @ts-ignore */
-  
-  if (!token) return res.status(401).json({ message: "Not Authorized" });
+       /* @ts-ignore */
+    return NextResponse.status(400).json({ message: "This event is not permitted" });
+
+   /* @ts-ignore */
+  if (!token) return  NextResponse.status(401).json({ message: "Not Authorized" });
 
   try {
     const verifyToken = await fetch(
@@ -34,11 +34,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     if (!verifyToken.ok)
       /* @ts-ignore */
-      return res.status(401).json({ message: "Not Authorization" });
+      return NextResponse.status(401).json({ message: "Not Authorization" });
   } catch (err) {
     console.log(err);
     return (
-      res
+      NextResponse
         /* @ts-ignore */
         .status(500)
         .json({ message: "Unable to verify Snipcart webhook token" })
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       case "customauth:customer_updated":
         /* @ts-ignore */
         return (
-          res
+          NextResponse
             /* @ts-ignore */
             .status(200)
             .json({ message: "Customer updated - no action taken" })
