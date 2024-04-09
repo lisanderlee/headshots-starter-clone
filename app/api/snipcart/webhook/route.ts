@@ -12,9 +12,9 @@ export async function POST(req: Request) {
   //   "order.completed",
   //   "customauth:customer_updated",
   // ];
-  const result = await req.json()
 
-  console.log("TEST SIMPLE", result.body );
+
+  console.log("TEST SIMPLE", req);
   // const token = req.headers["x-snipcart-requesttoken"];
   // console.log(token);
 
