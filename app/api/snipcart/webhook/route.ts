@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: Request) {
 
-  // const  messages = await req.json()
-  const { headers, body } = req;
+  const  { headers, body }  = await req.json()
+
   console.log("LISO HEADER",headers)
   console.log("LISO BODY",headers)
 }
