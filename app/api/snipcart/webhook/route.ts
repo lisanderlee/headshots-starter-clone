@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   const { headers, body } = req;
   /* @ts-ignore */
   if (headers.get("content-type") !== "application/json") {
-    return new NextResponse("Content-Type must be application/json", {
+    return new NextResponse("Content-Type must be application/json LISO", {
       status: 400,
     });
   }
