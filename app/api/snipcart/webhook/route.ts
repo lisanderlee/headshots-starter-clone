@@ -4,8 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: Request) {
 
-  const  messages = await req.json()
-  console.log("MESA",messages)
+  // const  messages = await req.json()
+  const { headers, body } = req;
+  console.log("LISO HEADER",headers)
+  console.log("LISO BODY",headers)
 }
 
 // import type { SnipcartRequest, SnipcartWebhookEvent } from "@/types/printful";
