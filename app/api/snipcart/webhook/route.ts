@@ -12,17 +12,17 @@ export async function POST(req: NextRequest) {
   const eventName = result.eventName;
   const content = result.content;
   /* @ts-ignore */
-  const token = req.headers["x-snipcart-requesttoken"];
+  // const token = req.headers["x-snipcart-requesttoken"];
   const method = req.method
   console.log("METHOD", method)
 
-  // if (req.method !== "POST")
-  //   /* @ts-ignore */
-  //   return res.status(405).json({ message: "Method not allowed" });
+  if (req.method !== "POST")
+    /* @ts-ignore */
+    return res.status(405).json({ message: "Method not allowed" });
 
-  // if (!allowedEvents.includes(eventName))
-  //   /* @ts-ignore */
-  //   return res.status(400).json({ message: "This event is not permitted" });
+  if (!allowedEvents.includes(eventName))
+    /* @ts-ignore */
+    return res.status(400).json({ message: "This event is not permitted" });
 
   // try {
   //   switch (eventName) {
