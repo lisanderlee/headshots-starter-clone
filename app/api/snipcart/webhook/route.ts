@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
   const  result  = await req.json()
 
-  console.log("RESULT",result)
+  console.log("RESULT",result.eventName)
 
 }
 
