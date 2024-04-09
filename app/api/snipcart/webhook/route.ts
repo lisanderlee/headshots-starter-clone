@@ -7,13 +7,14 @@ import createOrder from "@/components/shop/lib/create-order";
 
 
 
-export default async function handler(req: Request) {
-  const allowedEvents: SnipcartWebhookEvent[] = [
-    "order.completed",
-    "customauth:customer_updated",
-  ];
+export async function POST(req: Request) {
+  // const allowedEvents: SnipcartWebhookEvent[] = [
+  //   "order.completed",
+  //   "customauth:customer_updated",
+  // ];
+  const result = await req.json()
 
-  console.log("TEST SIMPLE", req.headers, req.body);
+  console.log("TEST SIMPLE", req.headers, req.body, result);
   // const token = req.headers["x-snipcart-requesttoken"];
   // console.log(token);
 
