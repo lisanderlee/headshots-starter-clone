@@ -1,54 +1,62 @@
+import type { NextApiResponse } from "next";
+
 import type { SnipcartRequest, SnipcartWebhookEvent } from "@/types/printful";
 import createOrder from "@/components/shop/lib/create-order";
 
-const allowedEvents: SnipcartWebhookEvent[] = [
-  "order.completed",
-  "customauth:customer_updated",
-];
 
-export default  function POST(req: Request, res: Response) {
-  /* @ts-ignore */
-  const { eventName, content } =  parseBody(req);
 
-  if (!allowedEvents.includes(eventName)) {
-      /* @ts-ignore */
-    res.status(400).json({ message: "This event is not permitted" });
-    return;
-  }
-  /* @ts-ignore */
-  const token = req.headers["x-snipcart-requesttoken"];
-    /* @ts-ignore */
-  const verifyToken = await fetch(`https://app.snipcart.com/api/requestvalidation/${token}`);
+export async function POST(req: Request) {
+  const { body } = await req.json()
+  console.log(body)
+  // const allowedEvents: SnipcartWebhookEvent[] = [
+  //   "order.completed",
+  //   "customauth:customer_updated",
+  // ];
 
-  if (!verifyToken.ok) {
-      /* @ts-ignore */
-    res.status(401).json({ message: "Not Authorized" });
-    return;
-  }
+  // console.log(req.headers);
+  // const token = req.headers["x-snipcart-requesttoken"];
+  // console.log(token);
 
-  try {
-    switch (eventName) {
-      case "order.completed":
-          /* @ts-ignore */
-        await createOrder(content);
-        break;
-      case "customauth:customer_updated":
-          /* @ts-ignore */
-        res.status(200).json({ message: "Customer updated - no action taken" });
-        return;
-      default:
-        throw new Error("No such event handler exists");
-    }
-  /* @ts-ignore */
-    res.status(200).json({ message: "Done" });
-  } catch (err) {
-    console.log(err);
-      /* @ts-ignore */
-    res.status(500).json({ message: "Something went wrong" });
-  }
-}
+  // const { eventName, content } = req.body;
 
-async function parseBody(req: Request) {
-  const body = await req.json();
-  return { eventName: body.eventName, content: body.content };
+  // if (req.method !== "POST")
+  //   return res.status(405).json({ message: "Method not allowed" });
+
+  // if (!allowedEvents.includes(eventName))
+  //   return res.status(400).json({ message: "This event is not permitted" });
+
+  // if (!token) return res.status(401).json({ message: "Not Authorized" });
+
+  // try {
+  //   const verifyToken = await fetch(
+  //     `https://app.snipcart.com/api/requestvalidation/${token}`
+  //   );
+
+  //   if (!verifyToken.ok)
+  //     return res.status(401).json({ message: "Not Authorization" });
+  // } catch (err) {
+  //   console.log(err);
+  //   return res
+  //     .status(500)
+  //     .json({ message: "Unable to verify Snipcart webhook token" });
+  // }
+
+  // try {
+  //   switch (eventName) {
+  //     case "order.completed":
+  //       await createOrder(content);
+  //       break;
+  //     case "customauth:customer_updated":
+  //       return res
+  //         .status(200)
+  //         .json({ message: "Customer updated - no action taken" });
+  //     default:
+  //       throw new Error("No such event handler exists");
+  //   }
+
+  //   res.status(200).json({ message: "Done" });
+  // } catch (err) {
+  //   console.log(err);
+  //   res.status(500).json({ message: "Something went wrong" });
+  // }
 }
