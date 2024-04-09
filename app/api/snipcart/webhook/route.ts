@@ -11,7 +11,8 @@ export async function POST(req: NextRequest) {
   ];
 
   /* @ts-ignore */
-  const { headers, body } = req.body;
+  const { headers, body } = req.json();
+  console.log("KSA", headers, body)
   /* @ts-ignore */
   if (headers.get("content-type") !== "application/json") {
     return new NextResponse("Content-Type must be application/json LISO", {
