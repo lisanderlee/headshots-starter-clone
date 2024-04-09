@@ -9,11 +9,11 @@ export async function POST(req: Request) {
   ];
 
   const result = await req.json();
-  console.log("HEADERS", result.headers);
   const eventName = result.eventName;
   const content = result.content;
-
-
+  /* @ts-ignore */
+  const token = req.headers["x-snipcart-requesttoken"];
+  console.log("TOKEN",token);
 
 
 
