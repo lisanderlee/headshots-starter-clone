@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: Request) {
 
   const  messages = await req.json()
-  console.log(messages)
+  console.log("MESA",messages)
 }
 
 // import type { SnipcartRequest, SnipcartWebhookEvent } from "@/types/printful";
