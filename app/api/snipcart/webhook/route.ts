@@ -12,8 +12,8 @@ export async function POST(req: Request) {
   const eventName = result.eventName;
   const content = result.content;
   /* @ts-ignore */
-  const token = req.headers["x-snipcart-requesttoken"];
-  console.log("TOKEN",token);
+  // const token = req.headers["x-snipcart-requesttoken"];
+  console.log("TOKEN",req);
 
 
 
