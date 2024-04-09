@@ -13,19 +13,22 @@ export async function POST(req: NextRequest) {
   const result = await req.json();
   const eventName = result.eventName;
   const content = result.content;
-  const method = req.method
-
-
+  const method = req.method;
 
   if (method !== "POST")
-    /* @ts-ignore */
-    return res.status(405).json({ message: "Method not allowed" });
+    return new Response("Method not allowed", {
+      status: 405,
+    });
 
   if (!allowedEvents.includes(eventName))
-    /* @ts-ignore */
-    return res.status(400).json({ message: "This event is not permitted" });
-  /* @ts-ignore */
-  if (!token) return res.status(401).json({ message: "Not Authorized" });
+    return new Response("This event is not permitted", {
+      status: 400,
+    });
+
+  if (!token)
+    return new Response("Not Authorized", {
+      status: 401,
+    });
 
   try {
     const verifyToken = await fetch(
@@ -33,34 +36,35 @@ export async function POST(req: NextRequest) {
     );
 
     if (!verifyToken.ok)
-        /* @ts-ignore */
-      return res.status(401).json({ message: "Not Authorization" });
+      return new Response("Not Authorized", {
+        status: 401,
+      });
   } catch (err) {
     console.log(err);
-      /* @ts-ignore */
-    return res
-      .status(500)
-      .json({ message: "Unable to verify Snipcart webhook token" });
+    return new Response("Unable to verify Snipcart webhook token", {
+      status: 500,
+    });
   }
-  
+
   try {
     switch (eventName) {
       case "order.completed":
         await createOrder(content);
         break;
       case "customauth:customer_updated":
-        /* @ts-ignore */
-        return res
-          .status(200)
-          .json({ message: "Customer updated - no action taken" });
+        return new Response("Customer updated - no action taken", {
+          status: 200,
+        });
       default:
         throw new Error("No such event handler exists");
     }
-    /* @ts-ignore */
-    res.status(200).json({ message: "Done" });
+    return new Response("Done", {
+      status: 200,
+    });
   } catch (err) {
     console.log(err);
-    /* @ts-ignore */
-    res.status(500).json({ message: "Something went wrong" });
+    return new Response("Something went wrong", {
+      status: 500,
+    });
   }
 }
