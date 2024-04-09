@@ -12,19 +12,19 @@ export async function POST(req: NextRequest) {
 
   const { headers, body } = req;
   /* @ts-ignore */
-  if (headers.get("content-type") !== "application/json") {
-    return new NextResponse("Content-Type must be application/json", {
-      status: 400,
-    });
-  }
+  // if (headers.get("content-type") !== "application/json") {
+  //   return new NextResponse("Content-Type must be application/json", {
+  //     status: 400,
+  //   });
+  // }
   /* @ts-ignore */
   const token = headers.get("x-snipcart-requesttoken");
   /* @ts-ignore */
   const { eventName, content } = body;
 
-  // if (eventName !== "order.completed" && eventName !== "customauth:customer_updated") {
-  //   return new NextResponse("This event is not permitted", { status: 400 });
-  // }
+  if (eventName !== "order.completed" && eventName !== "customauth:customer_updated") {
+    return new NextResponse("This event is not permitted", { status: 400 });
+  }
 
   if (!token) {
     return new NextResponse("Not Authorized", { status: 401 });
