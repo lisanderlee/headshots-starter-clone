@@ -1,5 +1,6 @@
 import type { SnipcartRequest, SnipcartWebhookEvent } from "@/types/printful";
 import type { NextRequest } from "next/server";
+import { headers } from "next/headers";
 import createOrder from "@/components/shop/lib/create-order";
 
 export async function POST(req: NextRequest) {
@@ -7,22 +8,24 @@ export async function POST(req: NextRequest) {
     "order.completed",
     "customauth:customer_updated",
   ];
+  const headersList = headers();
 
   const result = await req.json();
   const eventName = result.eventName;
   const content = result.content;
+  const method = req.method
   /* @ts-ignore */
   // const token = req.headers["x-snipcart-requesttoken"];
-  const method = req.method
-  console.log("METHOD", method)
 
-  if (req.method !== "POST")
-    /* @ts-ignore */
-    return res.status(405).json({ message: "Method not allowed" });
+  console.log("HEDER", headersList)
 
-  if (!allowedEvents.includes(eventName))
-    /* @ts-ignore */
-    return res.status(400).json({ message: "This event is not permitted" });
+  // if (req.method !== "POST")
+  //   /* @ts-ignore */
+  //   return res.status(405).json({ message: "Method not allowed" });
+
+  // if (!allowedEvents.includes(eventName))
+  //   /* @ts-ignore */
+  //   return res.status(400).json({ message: "This event is not permitted" });
 
   // try {
   //   switch (eventName) {
