@@ -1,9 +1,10 @@
 import type { SnipcartRequest, SnipcartWebhookEvent } from "@/types/printful";
-import  { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { headers } from "next/headers";
 import createOrder from "@/components/shop/lib/create-order";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, res: NextResponse) {
   const allowedEvents: SnipcartWebhookEvent[] = [
     "order.completed",
     "customauth:customer_updated",
@@ -13,9 +14,7 @@ export async function POST(req: NextRequest) {
   const result = await req.json();
   const eventName = result.eventName;
   const content = result.content;
-  const method = req.method
-
-
+  const method = req.method;
 
   if (method !== "POST")
     /* @ts-ignore */
@@ -24,8 +23,9 @@ export async function POST(req: NextRequest) {
   if (!allowedEvents.includes(eventName))
     /* @ts-ignore */
     return res.status(400).json({ message: "This event is not permitted" });
- /* @ts-ignore */
-  if (!token) return NextResponse.status(401).json({ message: "Not Authorized" });
+  /* @ts-ignore */
+  
+  if (!token) return res.status(401).json({ message: "Not Authorized" });
 
   try {
     const verifyToken = await fetch(
@@ -33,14 +33,16 @@ export async function POST(req: NextRequest) {
     );
 
     if (!verifyToken.ok)
-       /* @ts-ignore */
-      return NextResponse.status(401).json({ message: "Not Authorization" });
+      /* @ts-ignore */
+      return res.status(401).json({ message: "Not Authorization" });
   } catch (err) {
     console.log(err);
-    return NextResponse
-     /* @ts-ignore */
-      .status(500)
-      .json({ message: "Unable to verify Snipcart webhook token" });
+    return (
+      res
+        /* @ts-ignore */
+        .status(500)
+        .json({ message: "Unable to verify Snipcart webhook token" })
+    );
   }
 
   try {
@@ -50,9 +52,12 @@ export async function POST(req: NextRequest) {
         break;
       case "customauth:customer_updated":
         /* @ts-ignore */
-        return res
-          .status(200)
-          .json({ message: "Customer updated - no action taken" });
+        return (
+          res
+            /* @ts-ignore */
+            .status(200)
+            .json({ message: "Customer updated - no action taken" })
+        );
       default:
         throw new Error("No such event handler exists");
     }
