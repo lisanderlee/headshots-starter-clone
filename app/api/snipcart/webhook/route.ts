@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     "customauth:customer_updated",
   ];
   const headersList = headers();
-
+  const token = headersList.get("x-snipcart-requesttoken");
   const result = await req.json();
   const eventName = result.eventName;
   const content = result.content;
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   /* @ts-ignore */
   // const token = req.headers["x-snipcart-requesttoken"];
 
-  console.log("HEDER", headersList)
+  console.log("HEDER", token)
 
   // if (req.method !== "POST")
   //   /* @ts-ignore */
