@@ -15,7 +15,7 @@ export default async function handler(
     "customauth:customer_updated",
   ];
 
-  console.log(req.headers);
+return req.headers;
   // const token = req.headers["x-snipcart-requesttoken"];
   // console.log(token);
 
