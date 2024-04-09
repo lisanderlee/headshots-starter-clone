@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-
-
 export async function POST(req: Request) {
-
-  const  result  = await req.json()
-
-  console.log("RESULT",result.eventName)
-
+  const result = await req.json();
+  const eventName = result.eventName;
+  const content = result.content;
+  console.log("EVENT", eventName);
+  console.log("CONTENT", content);
 }
 
 // import type { SnipcartRequest, SnipcartWebhookEvent } from "@/types/printful";
