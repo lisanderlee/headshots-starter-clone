@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   const { eventName, content } = body;
 
   if (eventName !== "order.completed" && eventName !== "customauth:customer_updated") {
-    return new NextResponse("This event is not permitted", { status: 400 });
+    return new NextResponse("This event is not permitted acaaaaaaaa", { status: 400 });
   }
 
   if (!token) {
@@ -42,10 +42,12 @@ export async function POST(req: NextRequest) {
 
     switch (eventName) {
       case "order.completed":
+        console.log("ORDER COMPLETE", eventName)
         await createOrder(content);
         return new NextResponse("Order created", { status: 200 });
         break;
       case "customauth:customer_updated":
+        console.log("CUSTOMER UPDATED", eventName)
         return new NextResponse("Customer updated", { status: 200 });
         break;
       default:
