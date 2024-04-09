@@ -22,9 +22,9 @@ export async function POST(req: NextRequest) {
   /* @ts-ignore */
   const { eventName, content } = body;
 
-  if (eventName !== "order.completed" && eventName !== "customauth:customer_updated") {
-    return new NextResponse("This event is not permitted", { status: 400 });
-  }
+  // if (eventName !== "order.completed" && eventName !== "customauth:customer_updated") {
+  //   return new NextResponse("This event is not permitted", { status: 400 });
+  // }
 
   if (!token) {
     return new NextResponse("Not Authorized", { status: 401 });
