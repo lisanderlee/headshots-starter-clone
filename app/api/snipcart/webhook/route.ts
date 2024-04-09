@@ -1,7 +1,8 @@
 import type { SnipcartRequest, SnipcartWebhookEvent } from "@/types/printful";
+import type { NextRequest } from "next/server";
 import createOrder from "@/components/shop/lib/create-order";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
 
   const allowedEvents: SnipcartWebhookEvent[] = [
     "order.completed",
