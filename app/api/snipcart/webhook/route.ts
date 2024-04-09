@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   const eventName = result.eventName;
   const content = result.content;
   const method = req.method;
-
+  console.log(token);
   if (method !== "POST")
     return new Response("Method not allowed", {
       status: 405,
