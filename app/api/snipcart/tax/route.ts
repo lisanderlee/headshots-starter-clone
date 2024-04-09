@@ -22,7 +22,7 @@ type Error = {
   errors: { key: string; message: string }[];
 };
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   const result = await req.json();
   const eventName = result.eventName;
   const content = result.content;

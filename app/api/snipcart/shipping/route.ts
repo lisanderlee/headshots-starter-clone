@@ -23,7 +23,7 @@ import type {
 //   errors: { key: string; message: string }[];
 // };
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   const result = await request.json();
   const eventName = result.eventName;
   const content = result.content;
