@@ -22,9 +22,12 @@ type Error = {
   errors: { key: string; message: string }[];
 };
 
-export async function GET(request: Request) {
-  /* @ts-ignore */
-  const { eventName, content } = request.body as SnipcartRequest["body"];
+export async function GET(req: Request) {
+  const result = await req.json();
+  const eventName = result.eventName;
+  const content = result.content;
+
+
 
   if (eventName !== "taxes.calculate") return new Response("", { status: 200 });
 
