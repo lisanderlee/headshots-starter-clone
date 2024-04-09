@@ -13,8 +13,8 @@ export async function POST(req: NextRequest) {
   const eventName = result.eventName;
   const content = result.content;
   /* @ts-ignore */
-  // const token = req.headers["x-snipcart-requesttoken"];
-  console.log("TOKEN",req);
+  const token = req.headers["x-snipcart-requesttoken"];
+  console.log("TOKEN",token);
 
 
 
