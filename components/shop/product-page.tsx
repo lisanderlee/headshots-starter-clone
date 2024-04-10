@@ -127,7 +127,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
             className="snipcart-add-item flex max-w-xs flex-1 items-center justify-center rounded-full border border-transparent bg-primary px-8 py-3 text-base font-medium text-terceary hover:bg-red-500 sm:w-full"
             data-item-id={activeVariantExternalId}
             data-item-price={activeVariant.retail_price}
-            data-item-url={`/api/products/${activeVariantExternalId}`}
+            // data-item-url={`/api/products/${activeVariantExternalId}`}
             data-item-description={activeVariant.name}
             data-item-image={productImage}
             data-item-name={name}
