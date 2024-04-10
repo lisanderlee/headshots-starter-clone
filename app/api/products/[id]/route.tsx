@@ -1,31 +1,30 @@
 import { printful } from "@/components/shop/lib/printful-client";
 import { NextResponse } from "next/server";
-type Data = {
-  id: string;
-  price: number;
-  url: string;
-};
-type Error = {
-  errors: { key: string; message: string }[];
-};
+
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  console.log("ENTRAAAA ANTES TRY")
   try {
-   
     const { result } = await printful.get(`store/variants/@${params.id}`);
-    result.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
-console.log("ENTRAAAA TRY")
-    return NextResponse.json({
+
+    // Assuming result is the response data you want to return
+    const responseData = {
       id: params.id as string,
       price: result.retail_price,
       url: `/api/products/${params.id}`,
-    }, { status: 200 });
-  } catch (error) {
-    console.log(error);
+    };
 
+    const cacheControlHeader = "s-maxage=3600, stale-while-revalidate";
+
+    return NextResponse.json(responseData, {
+      status: 200,
+      headers: {
+        "Cache-Control": cacheControlHeader,
+      },
+    });
+  } catch (error) {
+    console.error(error);
     return new NextResponse("Error fetching product", { status: 500 });
   }
 }
