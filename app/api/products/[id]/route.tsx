@@ -16,7 +16,7 @@ export async function GET(
    
     const { result } = await printful.get(`store/variants/@${params.id}`);
     result.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
-
+console.log("ENTRAAAA")
     return NextResponse.json({
       id: params.id as string,
       price: result.retail_price,
