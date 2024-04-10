@@ -131,9 +131,9 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
             data-item-description={activeVariant.name}
             data-item-image={productImage}
             data-item-name={name}
-            // data-item-custom1-name="Customers won't see this label in the cart"
-            // data-item-custom1-type="hidden"
-            // data-item-custom1-value="Customers won't see this value either"
+            data-item-custom1-name="Customers won't see this label in the cart"
+            data-item-custom1-type="hidden"
+            data-item-custom1-value="Customers won't see this value either"
           >
             Add to Cart
           </button>

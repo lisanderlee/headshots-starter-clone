@@ -13,6 +13,7 @@ export async function GET(
     const responseData = {
       id: params.id as string,
       price: result.retail_price,
+      customFields: [],
       url: `/api/products/${params.id}`,
     };
 console.log("ENTRA TRY" , responseData)
