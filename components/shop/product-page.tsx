@@ -4,7 +4,7 @@ import VariantPicker from "@/components/shop/variant-picker";
 import PictureModal from "@/components/shop/picture-picker-modal";
 import Link from "next/link";
 import ExtractProductId from "./utils/extract-product-id";
-
+import { useStore } from "@/lib/store";
 const dynamic = "force-dynamic";
 
 /* @ts-ignore */
@@ -13,7 +13,6 @@ function classNames(...classes) {
 }
 
 export default function ProductPage({ product, setProduct, pictures }: any) {
-  
   const [open, setOpen] = useState(false);
   const [productId, setProductId] = useState("");
   const [newMockups, setNewMockups] = useState("");
@@ -66,8 +65,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
       setProductImage(activeVariantFile.preview_url);
     }
   }, [newMockups, activeVariantFile]);
-  console.log(product)
-console.log(activeVariantExternalId)
+
   return (
     <div className=" lg:gap-x-10 flex  flex-col lg:flex-row pb-16">
       <div className="flex  w-full lg:w-2/3">
@@ -133,6 +131,9 @@ console.log(activeVariantExternalId)
             data-item-description={activeVariant.name}
             data-item-image={productImage}
             data-item-name={name}
+            data-item-custom1-name="Customers won't see this label in the cart"
+            data-item-custom1-type="hidden"
+            data-item-custom1-value="Customers won't see this value either"
           >
             Add to Cart
           </button>

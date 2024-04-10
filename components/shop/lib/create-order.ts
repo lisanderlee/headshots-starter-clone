@@ -1,7 +1,7 @@
 import { printful } from "./printful-client";
 
 import type { SnipcartWebhookContent, PrintfulShippingItem } from "@/types/printful";
-
+import { useStore } from "@/lib/store";
 const createOrder = async ({
   invoiceNumber,
   email,
@@ -22,7 +22,7 @@ const createOrder = async ({
     ...(shippingAddress.phone && { phone: shippingAddress.phone }),
     email,
   };
-
+  const { body } = useStore();
   const printfulItems: PrintfulShippingItem[] = items.map(
            /* @ts-ignore */
     (item): PrintfulShippingItem => ({

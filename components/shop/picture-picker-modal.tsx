@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import ExtractUniqueCombinations from "./utils/extract-placement";
 import UpdateBody from "./utils/update-body";
-import useStore from "@/lib/store";
+import { useStore } from "@/lib/store";
 export const dynamic = "force-dynamic";
 
 /* @ts-ignore */
@@ -22,7 +22,7 @@ export default function PictureModal({
   const [selectedUri, setSelectedUri] = useState(null);
   const [loading, setLoading] = useState(true);
   /* @ts-ignore */
-  const { setBodyContent } = useStore();
+  const { setBody } = useStore();
   useEffect(() => {
     if (!createdImages) return;
 
@@ -42,6 +42,8 @@ export default function PictureModal({
 
   /* @ts-ignore */
   const fetchProductVariants = async (id, styleId) => {
+    /* @ts-ignore */
+   
     const response = await fetch(`/api/getProductVariants/${id}`);
     const data = await response.json();
     const result = ExtractUniqueCombinations(data.data);
@@ -54,7 +56,7 @@ export default function PictureModal({
         productId,
         styleId
       );
-      setBodyContent(newBody);
+      setBody(newBody);
       return newBody;
     }
   };
