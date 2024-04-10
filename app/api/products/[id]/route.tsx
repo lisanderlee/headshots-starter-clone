@@ -5,6 +5,7 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  console.log("NO TRY" )
   try {
     const { result } = await printful.get(`store/variants/@${params.id}`);
 
@@ -14,7 +15,7 @@ export async function GET(
       price: result.retail_price,
       url: `/api/products/${params.id}`,
     };
-
+console.log("ENTRA TRY" , responseData)
     const cacheControlHeader = "s-maxage=3600, stale-while-revalidate";
 
     return NextResponse.json(responseData, {
