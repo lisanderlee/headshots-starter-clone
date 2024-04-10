@@ -12,11 +12,12 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  console.log("ENTRAAAA ANTES TRY")
   try {
    
     const { result } = await printful.get(`store/variants/@${params.id}`);
     result.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
-console.log("ENTRAAAA")
+console.log("ENTRAAAA TRY")
     return NextResponse.json({
       id: params.id as string,
       price: result.retail_price,
