@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     const verifyToken = await fetch(
       `https://app.snipcart.com/api/requestvalidation/${token}`
     );
-
+console.log("VERY", verifyToken)
     if (!verifyToken.ok)
       return new Response("VERIFY Not Authorized", {
         status: 401,
