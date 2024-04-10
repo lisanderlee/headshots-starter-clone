@@ -16,12 +16,12 @@ export async function GET(
       url: `/api/products/${params.id}`,
     };
 console.log("ENTRA TRY" , responseData)
-    const cacheControlHeader = "s-maxage=3600, stale-while-revalidate";
+    const cacheControlHeader = " Cache-Control, s-maxage=3600, stale-while-revalidate";
 
     return NextResponse.json(responseData, {
       status: 200,
       headers: {
-        "Cache-Control": cacheControlHeader,
+     cacheControlHeader,
       },
     });
   } catch (error) {
