@@ -10,12 +10,14 @@ export const dynamic = "force-dynamic";
 
 /* @ts-ignore */
 export default function PictureModal({
+  setProduct,
   open,
   setOpen,
   createdImages,
   id,
   productId,
   setNewMockups,
+  setNewFiles
 }: any) {
   const [selectedName, setSelectedName] = useState(0);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -43,7 +45,7 @@ export default function PictureModal({
   /* @ts-ignore */
   const fetchProductVariants = async (id, styleId) => {
     /* @ts-ignore */
-   
+
     const response = await fetch(`/api/getProductVariants/${id}`);
     const data = await response.json();
     const result = ExtractUniqueCombinations(data.data);
@@ -93,21 +95,20 @@ export default function PictureModal({
     return data;
   };
 
-  /* @ts-ignore */
+  // /* @ts-ignore */
   const handleClick = () => {
     if (selectedUri) {
       fetchMockUpStyle(productId).then((styleId) => {
         fetchProductVariants(id, styleId).then((newBody) => {
+          setNewFiles(newBody?.products[0].placements);
           generateMockup(newBody).then((result) => {
-        
             // Add a 1-second delay before executing fetchGeneratedMockups
-              setTimeout(() => {
-                fetchGeneratedMockups(result.data[0].id).then((data) => {
-                 setNewMockups(data);
-                 setOpen(false)
-
-                });
-              }, 3000);
+            setTimeout(() => {
+              fetchGeneratedMockups(result.data[0].id).then((data) => {
+                setNewMockups(data);
+                setOpen(false);
+              });
+            }, 3000);
           });
         });
       });
@@ -115,6 +116,8 @@ export default function PictureModal({
       alert("Pick a picture");
     }
   };
+
+
 
   //   /* @ts-ignore */
   //   const fetchShipping = async () => {

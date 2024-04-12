@@ -17,12 +17,39 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
   const [productId, setProductId] = useState("");
   const [newMockups, setNewMockups] = useState("");
   const [productImage, setProductImage] = useState();
+  const [newFiles, setNewFiles] = useState();
   const { id, name, variants } = product[0];
   const [firstVariant] = variants;
   const oneStyle = variants.length === 1;
   const [activeVariantExternalId, setActiveVariantExternalId] = useState(
     firstVariant.external_id
   );
+
+
+  const files = {"files": [
+    {
+    "type": "default",
+    "url": "https://sdbooth2-production.s3.amazonaws.com/kwvxzkpzdxjn5gkyg5xagzhn2hxo",
+    "options": [
+    {
+    "id": "template_type",
+    "value": "native"
+    }
+    ],
+    "filename": "shirt1.png",
+    "visible": true,
+    "position": {
+    "area_width": 1800,
+    "area_height": 2400,
+    "width": 1800,
+    "height": 1800,
+    "top": 300,
+    "left": 0,
+    "limit_to_print_area": true
+    }
+    }
+    ]}
+
 
   const activeVariant = variants.find(
     /* @ts-ignore */
@@ -65,7 +92,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
       setProductImage(activeVariantFile.preview_url);
     }
   }, [newMockups, activeVariantFile]);
-
+console.log(newFiles)
   return (
     <div className=" lg:gap-x-10 flex  flex-col lg:flex-row pb-16">
       <div className="flex  w-full lg:w-2/3">
@@ -123,6 +150,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
           )}
         </div>
         <div className="mt-5">
+          {/* LE voy a mandar el objecto con todo lo de print por un custom field. Esto se lo va a mandar a Create order por medio del webhook */}
           <button
             className="snipcart-add-item flex max-w-xs flex-1 items-center justify-center rounded-full border border-transparent bg-primary px-8 py-3 text-base font-medium text-terceary hover:bg-red-500 sm:w-full"
             data-item-id={activeVariantExternalId}
@@ -131,6 +159,8 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
             data-item-description={activeVariant.name}
             data-item-image={productImage}
             data-item-name={name}
+            data-item-custom1-type="hidden"
+            data-item-custom1-value={newFiles}
           >
             Add to Cart
           </button>
@@ -146,6 +176,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
           setNewMockups={setNewMockups}
           id={id}
           productId={productId}
+          setNewFiles={setNewFiles}
         />
       )}
     </div>

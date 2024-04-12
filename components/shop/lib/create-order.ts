@@ -1,7 +1,7 @@
 import { printful } from "./printful-client";
 
 import type { SnipcartWebhookContent, PrintfulShippingItem } from "@/types/printful";
-
+// Aca voy recivir todo lo del custo fiels con todo la info del print
 const createOrder = async ({
   invoiceNumber,
   email,
@@ -28,6 +28,7 @@ const createOrder = async ({
     (item): PrintfulShippingItem => ({
       external_variant_id: item.id,
       quantity: item.quantity,
+      // Aca voy a igualar los objectos de printfiles unicos a ese item. 
     })
   );
 
@@ -36,6 +37,7 @@ const createOrder = async ({
     recipient,
     items: printfulItems,
     shipping: shippingRateUserDefinedId,
+    
   });
 
   return result;
