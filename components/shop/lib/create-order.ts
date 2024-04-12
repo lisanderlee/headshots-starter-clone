@@ -22,7 +22,7 @@ const createOrder = async ({
     ...(shippingAddress.phone && { phone: shippingAddress.phone }),
     email,
   };
-console.log(items)
+console.log("ITEMSSS",items)
   const printfulItems: PrintfulShippingItem[] = items.map(
     
            /* @ts-ignore */
