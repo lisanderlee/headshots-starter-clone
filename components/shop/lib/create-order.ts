@@ -1,9 +1,6 @@
 import { printful } from "./printful-client";
 
-import type {
-  SnipcartWebhookContent,
-  PrintfulShippingItem,
-} from "@/types/printful";
+import type { SnipcartWebhookContent, PrintfulShippingItem } from "@/types/printful";
 // Aca voy recivir todo lo del custo fiels con todo la info del print
 const createOrder = async ({
   invoiceNumber,
@@ -25,37 +22,26 @@ const createOrder = async ({
     ...(shippingAddress.phone && { phone: shippingAddress.phone }),
     email,
   };
-
-  const headers = {
-    Authorization: `Bearer ${process.env.PRINTIFUL_KEY}`,
- 
-  
-  };
-
+console.log("ITEMSSS",items)
   const printfulItems: PrintfulShippingItem[] = items.map(
-    /* @ts-ignore */
+    
+           /* @ts-ignore */
     (item): PrintfulShippingItem => ({
-          /* @ts-ignore */
-      external_id: item.id,
+
+      external_variant_id: item.id,
       quantity: item.quantity,
-      // Aca voy a igualar los objectos de printfiles unicos a ese item.
+      // Aca voy a igualar los objectos de printfiles unicos a ese item. 
     })
   );
-  const body = {
+
+  const { result } = await printful.post("orders", {
     external_id: invoiceNumber,
     recipient,
     items: printfulItems,
     shipping: shippingRateUserDefinedId,
-  };
-
-  console.log("ANTES DE POST");
-  const result  = await fetch("https://api.printful.com/v2/orders", {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(body),
+    
   });
-
-  console.log(result);
+console.log(result)
   return result;
 };
 
