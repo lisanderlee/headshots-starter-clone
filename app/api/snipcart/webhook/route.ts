@@ -30,21 +30,21 @@ export async function POST(req: NextRequest) {
       status: 401,
     });
 
-  try {
-    const verifyToken = await fetch(
-      `https://app.snipcart.com/api/requestvalidation/${token}`
-    );
-console.log("VERY", verifyToken)
-    if (!verifyToken.ok)
-      return new Response("VERIFY Not Authorized", {
-        status: 401,
-      });
-  } catch (err) {
-    console.log(err);
-    return new Response("Unable to verify Snipcart webhook token", {
-      status: 500,
-    });
-  }
+//   try {
+//     const verifyToken = await fetch(
+//       `https://app.snipcart.com/api/requestvalidation/${token}`
+//     );
+// console.log("VERY", verifyToken)
+//     if (!verifyToken.ok)
+//       return new Response("VERIFY Not Authorized", {
+//         status: 401,
+//       });
+//   } catch (err) {
+//     console.log(err);
+//     return new Response("Unable to verify Snipcart webhook token", {
+//       status: 500,
+//     });
+//   }
 
   try {
     switch (eventName) {
