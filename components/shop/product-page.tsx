@@ -160,7 +160,7 @@ console.log(newFiles)
             data-item-image={productImage}
             data-item-name={name}
             data-item-custom1-type="hidden"
-            data-item-custom1-value={newFiles}
+            data-item-custom1-value="Customers won't see this value either"
           >
             Add to Cart
           </button>
