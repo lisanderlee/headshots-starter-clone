@@ -26,6 +26,30 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
   );
 
 
+  const files = {"files": [
+    {
+    "type": "default",
+    "url": "https://sdbooth2-production.s3.amazonaws.com/kwvxzkpzdxjn5gkyg5xagzhn2hxo",
+    "options": [
+    {
+    "id": "template_type",
+    "value": "native"
+    }
+    ],
+    "filename": "shirt1.png",
+    "visible": true,
+    "position": {
+    "area_width": 1800,
+    "area_height": 2400,
+    "width": 1800,
+    "height": 1800,
+    "top": 300,
+    "left": 0,
+    "limit_to_print_area": true
+    }
+    }
+    ]}
+
 
   const activeVariant = variants.find(
     /* @ts-ignore */
@@ -68,7 +92,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
       setProductImage(activeVariantFile.preview_url);
     }
   }, [newMockups, activeVariantFile]);
-console.log(product)
+
   return (
     <div className=" lg:gap-x-10 flex  flex-col lg:flex-row pb-16">
       <div className="flex  w-full lg:w-2/3">
@@ -131,7 +155,7 @@ console.log(product)
             className="snipcart-add-item flex max-w-xs flex-1 items-center justify-center rounded-full border border-transparent bg-primary px-8 py-3 text-base font-medium text-terceary hover:bg-red-500 sm:w-full"
             data-item-id={activeVariantExternalId}
             data-item-price={activeVariant.retail_price}
-            data-item-url={`/shop/${activeVariantExternalId}`}
+            data-item-url={`/api/products/${activeVariantExternalId}`}
             data-item-description={activeVariant.name}
             data-item-image={productImage}
             data-item-name={name}
