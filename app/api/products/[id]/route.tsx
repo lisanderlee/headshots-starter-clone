@@ -14,6 +14,7 @@ export async function GET(
       id: params.id as string,
       price: result.retail_price,
       url: `/api/products/${params.id}`,
+      itemcustom: [],
     };
 console.log("ENTRA TRY" , responseData)
     const cacheControlHeader = " Cache-Control, s-maxage=3600, stale-while-revalidate";
