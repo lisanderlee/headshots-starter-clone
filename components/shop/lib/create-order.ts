@@ -34,7 +34,7 @@ console.log("ITEMSSS",items)
     })
   );
 
-  const { result } = await printful.post("orders", {
+  const { result } = await printful.post("v2/orders", {
     external_id: invoiceNumber,
     recipient,
     items: printfulItems,
