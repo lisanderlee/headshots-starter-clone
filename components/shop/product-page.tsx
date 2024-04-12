@@ -26,30 +26,6 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
   );
 
 
-  const files = {"files": [
-    {
-    "type": "default",
-    "url": "https://sdbooth2-production.s3.amazonaws.com/kwvxzkpzdxjn5gkyg5xagzhn2hxo",
-    "options": [
-    {
-    "id": "template_type",
-    "value": "native"
-    }
-    ],
-    "filename": "shirt1.png",
-    "visible": true,
-    "position": {
-    "area_width": 1800,
-    "area_height": 2400,
-    "width": 1800,
-    "height": 1800,
-    "top": 300,
-    "left": 0,
-    "limit_to_print_area": true
-    }
-    }
-    ]}
-
 
   const activeVariant = variants.find(
     /* @ts-ignore */
@@ -92,7 +68,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
       setProductImage(activeVariantFile.preview_url);
     }
   }, [newMockups, activeVariantFile]);
-console.log(newFiles)
+console.log(product)
   return (
     <div className=" lg:gap-x-10 flex  flex-col lg:flex-row pb-16">
       <div className="flex  w-full lg:w-2/3">
