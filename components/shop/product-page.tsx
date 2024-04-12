@@ -159,9 +159,7 @@ console.log(newFiles)
             data-item-description={activeVariant.name}
             data-item-image={productImage}
             data-item-name={name}
-            data-item-custom1-name="update"
-            data-item-custom1-type="hidden"
-          
+         
           >
             Add to Cart
           </button>

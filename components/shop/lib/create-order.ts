@@ -39,7 +39,7 @@ const createOrder = async ({
     shipping: shippingRateUserDefinedId,
     
   });
-
+console.log(result)
   return result;
 };
 
