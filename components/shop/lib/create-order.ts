@@ -49,6 +49,7 @@ const createOrder = async ({
     shipping: shippingRateUserDefinedId,
   };
 
+  console.log("ANTES DE POST");
   const result  = await fetch("https://api.printful.com/v2/orders", {
     method: "POST",
     headers: headers,
