@@ -29,10 +29,8 @@ const createOrder = async ({
   const headers = {
     Authorization: `Bearer ${process.env.PRINTIFUL_KEY}`,
     "X-PF-Store-Id": "13335936",
-    "Content-Type": "application/json",
-    Connection: "keep-alive",
-    "Accept-Encoding": "gzip, deflate, br",
-    Accept: "*/*",
+    "Content-Type": "application/json"
+  
   };
 
   const printfulItems: PrintfulShippingItem[] = items.map(
