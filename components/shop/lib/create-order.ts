@@ -28,8 +28,7 @@ const createOrder = async ({
 
   const headers = {
     Authorization: `Bearer ${process.env.PRINTIFUL_KEY}`,
-    "X-PF-Store-Id": "13335936",
-    "Content-Type": "application/json"
+ 
   
   };
 
