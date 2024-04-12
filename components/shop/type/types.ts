@@ -96,6 +96,6 @@ export interface PrintfulProduct {
 }
 
 export type PrintfulShippingItem = {
-  external_variant_id: string;
+  external_id: string;
   quantity: number;
 };

@@ -38,7 +38,8 @@ const createOrder = async ({
   const printfulItems: PrintfulShippingItem[] = items.map(
     /* @ts-ignore */
     (item): PrintfulShippingItem => ({
-      external_variant_id: item.id,
+          /* @ts-ignore */
+      external_id: item.id,
       quantity: item.quantity,
       // Aca voy a igualar los objectos de printfiles unicos a ese item.
     })
