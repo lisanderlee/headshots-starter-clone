@@ -17,7 +17,8 @@ export default function PictureModal({
   id,
   productId,
   setNewMockups,
-  setNewFiles
+  setNewFiles,
+  setAvatarImg
 }: any) {
   const [selectedName, setSelectedName] = useState(0);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -40,6 +41,7 @@ export default function PictureModal({
   /* @ts-ignore */
   const handleImageClick = (uri) => {
     setSelectedUri(uri);
+    setAvatarImg(uri);
   };
 
   /* @ts-ignore */
@@ -56,7 +58,7 @@ export default function PictureModal({
         selectedUri,
         result.product_options,
         productId,
-        styleId
+        styleId 
       );
       setBody(newBody);
       return newBody;
@@ -98,25 +100,36 @@ export default function PictureModal({
   // /* @ts-ignore */
   const handleClick = () => {
     if (selectedUri) {
-      fetchMockUpStyle(productId).then((styleId) => {
-        fetchProductVariants(id, styleId).then((newBody) => {
-          setNewFiles(newBody?.products[0].placements);
-          generateMockup(newBody).then((result) => {
-            // Add a 1-second delay before executing fetchGeneratedMockups
-            setTimeout(() => {
-              fetchGeneratedMockups(result.data[0].id).then((data) => {
-                setNewMockups(data);
-                setOpen(false);
-              });
-            }, 3000);
-          });
-        });
-      });
-    } else {
-      alert("Pick a picture");
-    }
-  };
+       fetchMockUpStyle(productId)
+         .then((styleId) => {
+           console.log('Style ID:', styleId);
+           console.log('id:', id);
 
+           return fetchProductVariants(id, styleId);
+         })
+         .then((newBody) => {
+           console.log('New Body:', JSON.stringify(newBody) );
+           setNewFiles(newBody?.products[0].placements);
+           return generateMockup(newBody);
+         })
+         .then((result) => {
+           // Assuming result.data[0].id is the correct path to the ID
+           const mockupId = result.data[0].id;
+           return fetchGeneratedMockups(mockupId);
+         })
+         .then((data) => {
+           setNewMockups(data);
+           setOpen(false);
+         })
+         .catch((error) => {
+           console.error('Error in handleClick:', error);
+           // Handle the error appropriately, e.g., show an error message to the user
+         });
+    } else {
+       alert("Pick a picture");
+    }
+   };
+   
 
 
   //   /* @ts-ignore */

@@ -27,6 +27,7 @@ export async function POST(request: Request) {
   const result = await request.json();
   const eventName = result.eventName;
   const content = result.content;
+  const imageUrl = result.content.items[0].image
 
   if (eventName !== "shippingrates.fetch")
     return new Response("", {
@@ -46,11 +47,12 @@ export async function POST(request: Request) {
     shippingAddressProvince,
     shippingAddressPostalCode,
     shippingAddressPhone,
+    shippingAddress
   } = content;
 
   const recipient = {
-    ...(shippingAddress1 && { address1: shippingAddress1 }),
-    ...(shippingAddress2 && { address2: shippingAddress2 }),
+    ...(shippingAddress && { address1: shippingAddress?.address1 }),
+    ...(shippingAddress && { address2: shippingAddress?.address2 }),
     ...(shippingAddressCity && { city: shippingAddressCity }),
     ...(shippingAddressCountry && { country_code: shippingAddressCountry }),
     ...(shippingAddressProvince && { state_code: shippingAddressProvince }),
@@ -66,13 +68,65 @@ export async function POST(request: Request) {
     })
   );
 
+
+  const { result: itemDetails } = await printful.get(`store/variants/@${items[0].external_variant_id}`);
+
+  const headers = {
+    Authorization: `Bearer ${process.env.PRINTIFUL_KEY}`,
+    "X-PF-Store-Id": "13335936",
+    "Content-Type": "application/json",
+  };
+
+  const res = await fetch(
+    `https://api.printful.com/v2/sync-products/${itemDetails.sync_product_id}/sync-variants`,
+    {
+      headers: headers,
+    }
+  );
+
+  const productVariants = await res.json();
+  const matchingVariant = productVariants.data.find((variant: { id: any; }) => variant.id === itemDetails.id);
+  const placements = matchingVariant ? matchingVariant.placements[0] : [];
+
+  const printfulRequestBody2 = {
+    recipient: recipient,
+    order_items: [
+      {
+        catalog_variant_id: itemDetails.product.variant_id,
+        name: itemDetails.product.name,
+        image: itemDetails.product.image,
+        source: "catalog",
+        quantity: 1,
+        placements: [
+          {
+            placement: matchingVariant.placements[0].placement,
+            technique: matchingVariant.placements[0].technique,
+            layers: [
+              {
+                type: "file",
+                url: imageUrl
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  };
+
+
   try {
-    const { result } = await printful.post("shipping/rates", {
-      recipient,
-      items,
+    const printfulResult = await fetch(`https://api.printful.com/v2/orders`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer sEId4pLrV1w6yGKEPQnoK7QKN3Fd3eBH6FfACKjd`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(printfulRequestBody2),
     });
+
+
     const responseBody = JSON.stringify({
-       /* @ts-ignore */
+      /* @ts-ignore */
       rates: result.map((rate) => ({
         cost: rate.rate,
         description: rate.name,
@@ -86,7 +140,7 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json'
       }
     });
-         /* @ts-ignore */
+    /* @ts-ignore */
   } catch ({ error }) {
     console.log(error);
     return new Response("", {

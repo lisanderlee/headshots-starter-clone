@@ -14,6 +14,9 @@ export async function GET(
       id: params.id as string,
       price: result.retail_price,
       url: `/api/products/${params.id}`,
+      variant_id: result.id,
+      image: result.image_url,
+      name: result.name
    
     };
 console.log("ENTRA TRY" , responseData)
