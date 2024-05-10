@@ -51,6 +51,8 @@ export async function POST(request: Request) {
   } = content;
 
   const recipient = {
+    ...(shippingAddress1 && { address1: shippingAddress1 }),
+    ...(shippingAddress2 && { address2: shippingAddress2 }),
     ...(shippingAddress && { address1: shippingAddress?.address1 }),
     ...(shippingAddress && { address2: shippingAddress?.address2 }),
     ...(shippingAddressCity && { city: shippingAddressCity }),

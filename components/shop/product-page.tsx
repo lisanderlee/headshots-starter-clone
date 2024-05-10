@@ -59,7 +59,14 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
     }
     return null; // Return null if variant_id is not found
   }
-
+  useEffect(() => {
+    if (newMockups) {
+      const mockupUrl = getMockupUrl(newMockups, activeVariant.variant_id);
+      setProductImage(mockupUrl);
+    } else {
+      setProductImage(activeVariantFile.preview_url);
+    }
+  })
   // lib/fetchMockups.js
 
   async function fetchMockups(slug: any) {
@@ -75,14 +82,14 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
       throw error;
     }
   }
-
+    
   useEffect(() => {
     const fetchData = async () => {
       try {
 
         if (newMockups) {
-          const selfHref = newMockups?.data[0]._links.self.href;
-          const slugId = newMockups?.data[0].id
+          const selfHref = (newMockups as any)?.data[0]?._links.self.href;
+          const slugId = (newMockups as any)?.data[0]?.id
           const urlData = await fetchMockups(slugId); // Wait for the promise to resolve
           const mockupUrl = getMockupUrl(urlData, activeVariant.variant_id);
 
