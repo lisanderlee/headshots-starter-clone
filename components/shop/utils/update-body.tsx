@@ -25,10 +25,10 @@ function UpdateBody(placements, catalog_variant_id, url, placement_options, cata
                           {
                               type: "file",
                               position: {
-                                  width: placements.layers[0].position.width, // Set width
-                                  height: placements.layers[0].position.height, // Set height
-                                  top: placements.layers[0].position.top, // Set top
-                                  left: placements.layers[0].position.left, // Set left
+                                  width: 10, // Set width
+                                  height: 10, // Set height
+                                  top: 0, // Set top
+                                  left: 0, // Set left
                               },
                               url: url, // Set url
                               layer_options: [],
@@ -55,5 +55,5 @@ function UpdateBody(placements, catalog_variant_id, url, placement_options, cata
 
 
 
-  
+
 export default UpdateBody;

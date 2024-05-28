@@ -24,8 +24,7 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
   const [activeVariantExternalId, setActiveVariantExternalId] = useState(
     firstVariant.external_id
   );
-
-
+  const [avatarImg, setAvatarImg] = useState(null)
 
   const activeVariant = variants.find(
     /* @ts-ignore */
@@ -67,8 +66,47 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
     } else {
       setProductImage(activeVariantFile.preview_url);
     }
+  })
+  // lib/fetchMockups.js
+
+  async function fetchMockups(slug: any) {
+    try {
+      const response = await fetch(`/api/getMockupUrl/${slug}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching mockups:', error);
+      throw error;
+    }
+  }
+    
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+
+        if (newMockups) {
+          const selfHref = (newMockups as any)?.data[0]?._links.self.href;
+          const slugId = (newMockups as any)?.data[0]?.id
+          const urlData = await fetchMockups(slugId); // Wait for the promise to resolve
+          const mockupUrl = getMockupUrl(urlData, activeVariant.variant_id);
+
+          // Process the data from the GET request response
+          setProductImage(mockupUrl);
+        }
+        else {
+          setProductImage(activeVariantFile.preview_url);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
   }, [newMockups, activeVariantFile]);
-console.log(newFiles)
+
+
   return (
     <div className=" lg:gap-x-10 flex  flex-col lg:flex-row pb-16">
       <div className="flex  w-full lg:w-2/3">
@@ -133,9 +171,8 @@ console.log(newFiles)
             data-item-price={activeVariant.retail_price}
             data-item-url={`/api/products/${activeVariantExternalId}`}
             data-item-description={activeVariant.name}
-            data-item-image={productImage}
+            data-item-image={avatarImg !== null ? avatarImg : productImage}
             data-item-name={name}
-       
           >
             Add to Cart
           </button>
@@ -152,6 +189,7 @@ console.log(newFiles)
           id={id}
           productId={productId}
           setNewFiles={setNewFiles}
+          setAvatarImg={setAvatarImg}
         />
       )}
     </div>
