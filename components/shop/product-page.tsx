@@ -25,8 +25,8 @@ export default function ProductPage({ product, setProduct, pictures }: any) {
     firstVariant.external_id
   );
 
-
-
+console.log("VARA", variants)
+console.log(firstVariant)
   const activeVariant = variants.find(
     /* @ts-ignore */
     (v) => v.external_id === activeVariantExternalId
